@@ -1,0 +1,78 @@
+[gd_scene format=3 uid="uid://cd3c4sr8qfy57"]
+
+[ext_resource type="Script" uid="uid://dpa6l1sbdq4tr" path="res://scripts/menu.gd" id="1_ouk20"]
+[ext_resource type="Texture2D" uid="uid://b585fxpmplfn7" path="res://assets/images/Default.png" id="2_ouk20"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ouk20"]
+bg_color = Color(0.16470589, 0.1882353, 0.13333334, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_mae5d"]
+bg_color = Color(0.34901962, 0.2901961, 0.2, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[node name="Menu" type="Control" unique_id=602158284]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ouk20")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=278756598]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -256.0
+offset_top = -320.0
+offset_right = 256.0
+offset_bottom = 320.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("2_ouk20")
+expand_mode = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="." unique_id=786463646]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.0
+offset_top = -220.0
+offset_right = 102.0
+offset_bottom = -105.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="VBoxContainer" unique_id=175164715]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Art Of Conquest"
+horizontal_alignment = 1
+
+[node name="JogarButton" type="Button" parent="VBoxContainer" unique_id=116919040]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_ouk20")
+text = "Jogar"
+
+[node name="SairButton" type="Button" parent="VBoxContainer" unique_id=586649188]
+layout_mode = 2
+theme_override_styles/normal = SubResource("StyleBoxFlat_mae5d")
+text = "Sair
+"
+
+[connection signal="pressed" from="VBoxContainer/JogarButton" to="." method="_on_jogar_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/SairButton" to="." method="_on_sair_button_pressed"]

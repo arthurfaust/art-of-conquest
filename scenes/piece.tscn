@@ -1,0 +1,20 @@
+[gd_scene format=3 uid="uid://btri4wqhawte3"]
+
+[ext_resource type="Texture2D" uid="uid://ccf5gawv6n61o" path="res://assets/images/Fuzileiro.png" id="1_hisf2"]
+[ext_resource type="Script" uid="uid://cxxf3v3yqpr0h" path="res://scripts/piece.gd" id="2_sk825"]
+
+[node name="Piece" type="Sprite2D" unique_id=1299322908]
+scale = Vector2(0.025, 0.025)
+texture = ExtResource("1_hisf2")
+script = ExtResource("2_sk825")
+
+[node name="Label" type="Label" parent="." unique_id=304422402]
+z_index = 1
+offset_left = -280.0
+offset_top = -680.0
+offset_right = -223.0
+offset_bottom = -543.0
+scale = Vector2(10, 10)
+theme_override_font_sizes/font_size = 100
+horizontal_alignment = 1
+vertical_alignment = 1

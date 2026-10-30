@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://wuov3qqkqij8"]
+
+[ext_resource type="Script" uid="uid://c04kbl5ih2fsr" path="res://scripts/main.gd" id="1_ig7tw"]
+[ext_resource type="Texture2D" uid="uid://3njt3o443rs0" path="res://assets/images/tabuleiro_completo.png" id="2_0xm2m"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
+bg_color = Color(0.34901962, 0.2901961, 0.2, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_0xm2m"]
+bg_color = Color(0.34901962, 0.2901961, 0.2, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_1bvp3"]
+bg_color = Color(0.07058824, 0.078431375, 0.039215688, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
+bg_color = Color(0.07058824, 0.078431375, 0.039215688, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
+
+[node name="Main" type="Node2D" unique_id=508400261]
+script = ExtResource("1_ig7tw")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1057224866]
+offset_right = 640.0
+offset_bottom = 640.0
+texture = ExtResource("2_0xm2m")
+expand_mode = 1
+
+[node name="PiecesContainer" type="Node2D" parent="." unique_id=1943772520]
+
+[node name="Sidebar" type="Control" parent="." unique_id=1026388329]
+layout_mode = 3
+anchors_preset = 0
+offset_top = 512.0
+offset_right = 512.0
+offset_bottom = 640.0
+
+[node name="ResetButton" type="Button" parent="Sidebar" unique_id=1737716398]
+layout_mode = 0
+offset_left = 200.0
+offset_top = -240.0
+offset_right = 340.0
+offset_bottom = -208.0
+theme_override_colors/icon_disabled_color = Color(0.07058824, 0.078431375, 0.039215688, 1)
+theme_override_styles/normal = SubResource("StyleBoxFlat_h2yge")
+text = "Jogar novamente"
+
+[node name="StatusLabel" type="Label" parent="Sidebar" unique_id=276074204]
+layout_mode = 0
+offset_left = 128.0
+offset_top = 32.0
+offset_right = 384.0
+offset_bottom = 67.0
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 15
+theme_override_styles/normal = SubResource("StyleBoxFlat_0xm2m")
+text = "Teste"
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 2
+
+[node name="BlueGraveyard" type="PanelContainer" parent="Sidebar" unique_id=1799201108]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 120.0
+offset_bottom = 120.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_1bvp3")
+
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/BlueGraveyard" unique_id=587035848]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/BlueGraveyard/MarginContainer" unique_id=1253546587]
+layout_mode = 2
+
+[node name="BlueDiscardTitle" type="Label" parent="Sidebar/BlueGraveyard/MarginContainer/VBoxContainer" unique_id=1247362892]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "AZUIS: 0"
+horizontal_alignment = 1
+
+[node name="BlueDiscardGrid" type="GridContainer" parent="Sidebar/BlueGraveyard/MarginContainer/VBoxContainer" unique_id=2049521438]
+layout_mode = 2
+columns = 4
+
+[node name="RedGraveyard" type="PanelContainer" parent="Sidebar" unique_id=800020991]
+layout_mode = 0
+offset_left = 392.0
+offset_top = 8.0
+offset_right = 504.0
+offset_bottom = 120.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_lquwl")
+
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/RedGraveyard" unique_id=441667662]
+layout_mode = 2
+theme_override_constants/margin_left = 6
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 6
+theme_override_constants/margin_bottom = 5
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/RedGraveyard/MarginContainer" unique_id=706555097]
+layout_mode = 2
+
+[node name="RedDiscardTitle" type="Label" parent="Sidebar/RedGraveyard/MarginContainer/VBoxContainer" unique_id=84002333]
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "VERMELHOS: 0"
+horizontal_alignment = 1
+
+[node name="RedDiscardGrid" type="GridContainer" parent="Sidebar/RedGraveyard/MarginContainer/VBoxContainer" unique_id=1614764667]
+layout_mode = 2
+columns = 4
+
+[connection signal="pressed" from="Sidebar/ResetButton" to="." method="_on_reset_button_pressed"]

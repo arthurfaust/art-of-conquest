@@ -130,4 +130,60 @@ horizontal_alignment = 1
 layout_mode = 2
 columns = 4
 
+[node name="ProbabilityPanel" type="PanelContainer" parent="." unique_id=2093009586]
+offset_left = 528.0
+offset_top = 8.0
+offset_right = 824.0
+offset_bottom = 632.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_lquwl")
+
+[node name="MarginContainer" type="MarginContainer" parent="ProbabilityPanel" unique_id=302115197]
+layout_mode = 2
+theme_override_constants/margin_left = 16
+theme_override_constants/margin_top = 16
+theme_override_constants/margin_right = 16
+theme_override_constants/margin_bottom = 16
+
+[node name="VBoxContainer" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer" unique_id=1248720478]
+layout_mode = 2
+theme_override_constants/separation = 18
+
+[node name="Title" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=976644082]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.8, 0.55, 1)
+theme_override_font_sizes/font_size = 20
+text = "PROBABILIDADES"
+
+[node name="Summary" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=473330431]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Vermelhas desconhecidas: 8
+Espaço amostral: 2520 distribuições"
+autowrap_mode = 2
+
+[node name="Levels" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=1417985462]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Uma vermelha desconhecida:"
+autowrap_mode = 2
+
+[node name="Separator" type="HSeparator" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=115640135]
+layout_mode = 2
+
+[node name="Combat" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=366285872]
+layout_mode = 2
+theme_override_font_sizes/font_size = 16
+text = "Selecione uma peça azul para ver as chances de duelo."
+autowrap_mode = 2
+
+[node name="Explanation" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=2143893327]
+layout_mode = 2
+size_flags_vertical = 10
+theme_override_colors/font_color = Color(0.7, 0.73, 0.65, 1)
+theme_override_font_sizes/font_size = 14
+text = "Chances para um duelo contra uma vermelha desconhecida.
+No empate, ambas são eliminadas.
+Cerco elimina a peça que se moveu, independentemente do nível."
+autowrap_mode = 2
+
 [connection signal="pressed" from="Sidebar/ResetButton" to="." method="_on_reset_button_pressed"]

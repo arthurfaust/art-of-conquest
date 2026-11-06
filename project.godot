@@ -25,7 +25,7 @@ AudioManager="*uid://by5ombhu41f0e"
 
 [display]
 
-window/size/viewport_width=512
+window/size/viewport_width=832
 window/size/viewport_height=640
 window/stretch/mode="canvas_items"
 

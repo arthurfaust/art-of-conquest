@@ -27,6 +27,9 @@ const RED_FLAG = Vector2i(4, 7)
 # Caminhos atualizados para buscar os nós dentro da Sidebar lateral
 @onready var status_label = $Sidebar/StatusLabel
 @onready var reset_button = $Sidebar/ResetButton
+@onready var probability_summary = $ProbabilityPanel/MarginContainer/VBoxContainer/Summary
+@onready var probability_levels = $ProbabilityPanel/MarginContainer/VBoxContainer/Levels
+@onready var probability_combat = $ProbabilityPanel/MarginContainer/VBoxContainer/Combat
 
 # Referências dos painéis de descarte/cemitério
 @onready var blue_discard_grid = $Sidebar/BlueGraveyard/MarginContainer/VBoxContainer/BlueDiscardGrid
@@ -191,6 +194,7 @@ func register_eliminated_piece(piece: GamePiece):
 
 	target_grid.add_child(icon)
 	update_discard_titles()
+	update_probability_hud()
 
 # Controla as mensagens da Label na HUD lateral
 func update_status_msg():
@@ -208,6 +212,8 @@ func update_status_msg():
 				status_label.text = "Fim de Jogo:\nVitória do VERMELHO!"
 			else:
 				status_label.text = "Fim de Jogo"
+
+	update_probability_hud()
 
 # Detecta cliques do jogador
 func _input(event):
@@ -273,6 +279,7 @@ func handle_grid_click(grid_pos: Vector2i):
 		if board_texture:
 			board_texture.queue_redraw()
 		print_probability_debug(selected_piece)
+		update_probability_hud()
 		return
 		
 	if selected_piece:
@@ -280,6 +287,7 @@ func handle_grid_click(grid_pos: Vector2i):
 			var piece_to_move = selected_piece
 			piece_to_move.set_selected(false)
 			selected_piece = null
+			update_probability_hud()
 			
 			# Remove imediatamente o destaque das casas antes da animação.
 			if board_texture:
@@ -388,6 +396,7 @@ func check_for_combat(moved_piece: GamePiece):
 		moved_piece.reveal_level()
 		for inimigo in inimigos_adjacentes:
 			inimigo.reveal_level()
+		update_probability_hud()
 			
 		play_sfx(snd_combate1)
 		await get_tree().create_timer(1.0).timeout
@@ -404,6 +413,7 @@ func check_for_combat(moved_piece: GamePiece):
 func resolve_proximity_combat(attacker: GamePiece, defender: GamePiece):
 	attacker.reveal_level()
 	defender.reveal_level()
+	update_probability_hud()
 	
 	play_sfx(snd_combate1)
 	await get_tree().create_timer(1.5).timeout
@@ -488,6 +498,40 @@ func get_sample_space_size() -> int:
 
 func get_uncertainty_reduction() -> float:
 	return ProbabilityManager.get_uncertainty_reduction(get_known_red_levels())
+
+func update_probability_hud() -> void:
+	var known_levels = get_known_red_levels()
+	var counts = ProbabilityManager.get_unknown_red_counts(known_levels)
+	var total = ProbabilityManager.get_unknown_red_total(known_levels)
+	probability_summary.text = "Vermelhas desconhecidas: %d\nEspaço amostral: %d distribuições" % [
+		total, ProbabilityManager.get_sample_space_size(known_levels)
+	]
+
+	if total == 0:
+		probability_levels.text = "Todos os níveis vermelhos são conhecidos."
+	else:
+		var probabilities = ProbabilityManager.get_level_probabilities(known_levels)
+		var lines: PackedStringArray = []
+		for level in ProbabilityManager.INITIAL_RED_COUNTS:
+			lines.append("Nível %d: %d unidades · %.1f%%" % [level, counts[level], probabilities[level] * 100.0])
+		probability_levels.text = "Uma vermelha desconhecida:\n" + "\n".join(lines)
+
+	if current_state == GameState.SETUP_AZUL:
+		probability_combat.text = "Posicione suas peças para começar."
+	elif current_state == GameState.GAME_OVER:
+		probability_combat.text = "Partida encerrada."
+	elif total == 0:
+		probability_combat.text = "Não há inimigos desconhecidos para estimar um duelo."
+	elif not is_instance_valid(selected_piece):
+		probability_combat.text = "Selecione uma peça azul para ver as chances de duelo."
+	else:
+		var chances = ProbabilityManager.get_combat_probabilities(selected_piece.level, known_levels)
+		probability_combat.text = "Azul selecionada: nível %d\nVitória: %.1f%%\nEmpate: %.1f%%\nDerrota: %.1f%%" % [
+			selected_piece.level,
+			chances["win_probability"] * 100.0,
+			chances["draw_probability"] * 100.0,
+			chances["loss_probability"] * 100.0
+		]
 
 # Usa apenas informações que o jogador já conhece. Não consulta níveis ocultos.
 # As chances abaixo se referem a um duelo contra uma vermelha desconhecida.

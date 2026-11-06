@@ -118,18 +118,23 @@ Ao fim da partida, a mensagem mostra o vencedor e aparece o botão **Jogar novam
 - Guarde os Atiradores para inimigos já revelados ou para quando restarem poucas peças fortes no exército vermelho.
 - Duas de cada nível no início: se os dois Atiradores vermelhos já estão no cemitério, nenhuma peça escondida vence seu Lançador.
 
+### Painel de probabilidades
+
+O painel à direita mostra quantas vermelhas ainda são desconhecidas, a chance de cada nível e o espaço amostral das distribuições possíveis. Ao selecionar uma peça azul, mostra as chances de vitória, empate e derrota em um duelo contra uma vermelha desconhecida. As informações são atualizadas durante as revelações e eliminações.
+
+Essas chances não representam uma previsão de cerco nem de combate contra uma peça já revelada. Quando todas as vermelhas são conhecidas, o painel informa que não há inimigos desconhecidos para estimar. Para conferir também na aba Saída da Godot, ative **Debug Probabilities** no Inspector do nó Main.
+
 ## 6. Limitações conhecidas e funcionalidades não implementadas
 
 - **Sem tutorial dentro do jogo:** este README é o guia de uso.
 - **Só um modo de jogo:** 1 jogador contra o computador. Não há multijogador local nem online.
 - **IA simples:** o computador escolhe uma jogada aleatória entre as possíveis, dando preferência a avançar. Ele não usa as peças reveladas nem evita cercos.
-- **Probabilidades não aparecem na tela:** o cálculo de chances (vitória/empate/derrota e espaço amostral) está em `probability_manager.gd`. Para conferir na aba Saída da Godot, ative **Debug Probabilities** no Inspector do nó Main.
 - **Habilidades especiais das unidades** (previstas no GDD) não foram implementadas. Todo duelo é decidido só pelo nível.
 - **General (nível 5):** a arte existe, mas a unidade não participa da partida.
 - **Sem volta ao menu:** dentro da partida não há botão para voltar ao menu. Para sair, feche a janela.
 - **Sem opções de volume, pausa ou salvamento.**
 - **Bandeira azul:** o jogador pode mover uma peça para a casa da própria bandeira (o computador não pode fazer isso com a dele).
-- **Janela fixa de 512 x 640:** a interface escala ao redimensionar, mas foi pensada para esse tamanho.
+- **Janela de 832 x 640:** a interface escala ao redimensionar, mas foi pensada para esse tamanho, com o painel de probabilidades à direita.
 - **Executável:** a versão atual é executada pela Godot. Ainda não há um `.exe` pronto para download.
 
 ## 7. Estrutura do projeto

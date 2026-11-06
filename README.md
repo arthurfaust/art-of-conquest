@@ -137,7 +137,17 @@ Essas chances não representam uma previsão de cerco nem de combate contra uma 
 - **Janela de 832 x 640:** a interface escala ao redimensionar, mas foi pensada para esse tamanho, com o painel de probabilidades à direita.
 - **Executável:** a versão atual é executada pela Godot. Ainda não há um `.exe` pronto para download.
 
-## 7. Estrutura do projeto
+## 7. Validação das probabilidades
+
+O script `tests/probability_validation.gd` verifica os casos extremos, as 81 combinações válidas de quantidades conhecidas por nível e a integração com o HUD. Execute no PowerShell, dentro da pasta do projeto, ajustando o caminho da Godot se necessário:
+
+```powershell
+& 'C:\Program Files\Godot\Godot_v4.7.2-stable_win64.exe' --headless --path . --script tests/probability_validation.gd
+```
+
+O resultado esperado é `PROBABILITY_VALIDATION_OK`, com código de saída zero. Para testar a apresentação visual, execute o jogo com F5, selecione peças de níveis diferentes, confira os números após combates e reinicie a partida.
+
+## 8. Estrutura do projeto
 
 ```
 art-of-conquest/

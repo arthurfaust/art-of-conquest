@@ -33,6 +33,7 @@ corner_radius_bottom_left = 6
 
 [node name="Main" type="Node2D" unique_id=508400261]
 script = ExtResource("1_ig7tw")
+debug_probabilities = true
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1057224866]
 offset_right = 640.0

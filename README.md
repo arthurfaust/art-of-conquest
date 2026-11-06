@@ -123,7 +123,7 @@ Ao fim da partida, a mensagem mostra o vencedor e aparece o botão **Jogar novam
 - **Sem tutorial dentro do jogo:** este README é o guia de uso.
 - **Só um modo de jogo:** 1 jogador contra o computador. Não há multijogador local nem online.
 - **IA simples:** o computador escolhe uma jogada aleatória entre as possíveis, dando preferência a avançar. Ele não usa as peças reveladas nem evita cercos.
-- **Probabilidades não aparecem na tela:** o cálculo de chances (vitória/empate/derrota e espaço amostral) já existe no código (`main.gd`), mas ainda não é exibido na interface.
+- **Probabilidades não aparecem na tela:** o cálculo de chances (vitória/empate/derrota e espaço amostral) está em `probability_manager.gd`. Para conferir na aba Saída da Godot, ative **Debug Probabilities** no Inspector do nó Main.
 - **Habilidades especiais das unidades** (previstas no GDD) não foram implementadas. Todo duelo é decidido só pelo nível.
 - **General (nível 5):** a arte existe, mas a unidade não participa da partida.
 - **Sem volta ao menu:** dentro da partida não há botão para voltar ao menu. Para sair, feche a janela.
@@ -143,7 +143,8 @@ art-of-conquest/
 │   └── piece.tscn            # Peça do tabuleiro
 ├── scripts/
 │   ├── menu.gd               # Botões Jogar e Sair
-│   ├── main.gd               # Turnos, combate, IA, vitória e probabilidades
+│   ├── main.gd               # Turnos, combate, IA, vitória e integração das probabilidades
+│   ├── probability_manager.gd # Cálculos de probabilidades e espaço amostral
 │   ├── piece.gd              # Aparência, revelação e seleção da peça
 │   └── audio_manager.gd      # Música de fundo global (autoload)
 ├── assets/

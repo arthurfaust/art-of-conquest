@@ -3,12 +3,7 @@ extends Node2D
 const GRID_SIZE = 8
 const CELL_SIZE = 64 # Tamanho em pixels de cada quadrado do tabuleiro
 
-const INITIAL_RED_COUNTS = {
-	1: 2,
-	2: 2,
-	3: 2,
-	4: 2
-}
+const ProbabilityManager = preload("res://scripts/probability_manager.gd")
 
 # Ative no Inspector do nó Main para validar os cálculos na aba Saída.
 @export var debug_probabilities: bool = false
@@ -119,7 +114,10 @@ func init_board():
 
 # Posiciona as vermelhas aleatoriamente nas linhas 6 e 7
 func spawn_red_pieces_randomly():
-	var red_levels = [1, 1, 2, 2, 3, 3, 4, 4]
+	var red_levels: Array[int] = []
+	for level in ProbabilityManager.INITIAL_RED_COUNTS:
+		for _unit in range(ProbabilityManager.INITIAL_RED_COUNTS[level]):
+			red_levels.append(level)
 	red_levels.shuffle()
 	
 	var possible_positions = []
@@ -472,111 +470,24 @@ func get_known_red_levels() -> Array[int]:
 
 	return known_levels
 
+# A cena reúne os dados públicos; o gerenciador executa os cálculos.
 func get_unknown_red_counts() -> Dictionary:
-	var remaining = INITIAL_RED_COUNTS.duplicate()
-
-	var known_levels = get_known_red_levels()
-
-	for level in known_levels:
-		if remaining.has(level):
-			remaining[level] -= 1
-
-	return remaining
+	return ProbabilityManager.get_unknown_red_counts(get_known_red_levels())
 
 func get_unknown_red_total() -> int:
-	var counts = get_unknown_red_counts()
-	var total = 0
-
-	for level in counts:
-		total += counts[level]
-
-	return total
+	return ProbabilityManager.get_unknown_red_total(get_known_red_levels())
 
 func get_level_probabilities() -> Dictionary:
-	var counts = get_unknown_red_counts()
-	var total = get_unknown_red_total()
-
-	var probabilities = {}
-
-	for level in counts:
-		if total > 0:
-			probabilities[level] = float(counts[level]) / float(total)
-		else:
-			probabilities[level] = 0.0
-
-	return probabilities
+	return ProbabilityManager.get_level_probabilities(get_known_red_levels())
 
 func get_combat_probabilities(blue_level: int) -> Dictionary:
-	var counts = get_unknown_red_counts()
-	var total = get_unknown_red_total()
-
-	var wins = 0
-	var draws = 0
-	var losses = 0
-
-	for red_level in counts:
-		var quantity = counts[red_level]
-
-		if blue_level > red_level:
-			wins += quantity
-
-		elif blue_level == red_level:
-			draws += quantity
-
-		else:
-			losses += quantity
-
-	if total == 0:
-		return {
-			"wins": 0,
-			"draws": 0,
-			"losses": 0,
-			"total": 0,
-			"win_probability": 0.0,
-			"draw_probability": 0.0,
-			"loss_probability": 0.0
-		}
-
-	return {
-		"wins": wins,
-		"draws": draws,
-		"losses": losses,
-		"total": total,
-		"win_probability": float(wins) / float(total),
-		"draw_probability": float(draws) / float(total),
-		"loss_probability": float(losses) / float(total)
-	}
-
-func factorial(n: int) -> int:
-	var result = 1
-
-	for i in range(2, n + 1):
-		result *= i
-
-	return result
+	return ProbabilityManager.get_combat_probabilities(blue_level, get_known_red_levels())
 
 func get_sample_space_size() -> int:
-	var counts = get_unknown_red_counts()
-	var total = get_unknown_red_total()
-
-	if total == 0:
-		return 1
-
-	var denominator = 1
-
-	for level in counts:
-		denominator *= factorial(counts[level])
-
-	return factorial(total) / denominator
+	return ProbabilityManager.get_sample_space_size(get_known_red_levels())
 
 func get_uncertainty_reduction() -> float:
-	var initial_sample_space = 2520
-	var current_sample_space = get_sample_space_size()
-
-	return 1.0 - (
-		float(current_sample_space)
-		/ float(initial_sample_space)
-	)
+	return ProbabilityManager.get_uncertainty_reduction(get_known_red_levels())
 
 # Usa apenas informações que o jogador já conhece. Não consulta níveis ocultos.
 # As chances abaixo se referem a um duelo contra uma vermelha desconhecida.

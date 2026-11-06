@@ -89,9 +89,9 @@ As peças vermelhas aparecem como um **tanque genérico** até entrarem em comba
 
 ### Passo a passo de uma partida
 
-1. **Posicionamento:** as peças vermelhas são posicionadas automaticamente. As duas primeiras fileiras (parte de cima do tabuleiro) ficam azuis. Clique em 8 casas para colocar suas unidades. Elas entram sempre nesta ordem: Agente, Agente, Fuzileiro, Fuzileiro, Lançador, Lançador, Atirador, Atirador. A mensagem na parte de baixo da tela mostra o nível da próxima peça. A casa da bandeira não pode ser ocupada.
+1. **Posicionamento:** as peças vermelhas são posicionadas automaticamente. As duas primeiras fileiras (parte de cima do tabuleiro) ficam azuis. Clique em 8 casas para colocar suas unidades. Elas entram sempre nesta ordem: Agente, Agente, Fuzileiro, Fuzileiro, Lançador, Lançador, Atirador, Atirador. O cartão de status no alto à direita mostra o nível da próxima peça e o progresso do posicionamento. A casa da bandeira não pode ser ocupada.
 2. **Seu turno:** selecione uma peça e mova-a **uma casa** para cima, para baixo, para a esquerda ou para a direita (sem diagonal). A peça só pode ir para casas vazias.
-3. **Turno do computador:** a mensagem muda para *"Pensando... (VERMELHO)"* e uma peça vermelha se move.
+3. **Turno do computador:** o cartão de status fica vermelho e mostra *"Vermelho pensando..."* enquanto uma peça vermelha se move.
 4. Os turnos se alternam até alguém vencer.
 
 ### Regras de combate
@@ -101,7 +101,7 @@ O combate acontece **automaticamente** quando a peça que acabou de se mover ter
 - **Duelo (1 inimigo ao lado):** as duas peças são reveladas. Vence o **maior nível**, e a peça perdedora é eliminada. Se os níveis forem **iguais, as duas são eliminadas**.
 - **Cerco (2 ou mais inimigos ao lado):** todas as peças envolvidas são reveladas e **a peça que se moveu é eliminada**, sem comparar níveis. Cuidado ao avançar entre duas peças inimigas!
 
-As peças eliminadas aparecem nos **cemitérios** na parte de baixo da tela: **AZUIS** à esquerda e **VERMELHAS** à direita, cada um com um contador. Use os cemitérios para deduzir quais níveis inimigos ainda estão escondidos.
+As peças eliminadas aparecem nos **cemitérios** abaixo do tabuleiro: **BAIXAS AZUIS** à esquerda e **BAIXAS VERMELHAS** à direita. Cada cartão tem oito espaços, contador e o nível das unidades eliminadas. O cartão de status, no alto da coluna direita, mostra a fase da partida e identifica o turno por texto e cor. Use os cemitérios para deduzir quais níveis inimigos ainda estão escondidos.
 
 ### Objetivo e condições de vitória e derrota
 
@@ -134,7 +134,7 @@ Essas chances não representam uma previsão de cerco nem de combate contra uma 
 - **Sem volta ao menu:** dentro da partida não há botão para voltar ao menu. Para sair, feche a janela.
 - **Sem opções de volume, pausa ou salvamento.**
 - **Bandeira azul:** o jogador pode mover uma peça para a casa da própria bandeira (o computador não pode fazer isso com a dele).
-- **Janela de 832 x 640:** a interface escala ao redimensionar, mas foi pensada para esse tamanho, com o painel de probabilidades à direita.
+- **Janela de 832 x 704:** a interface escala ao redimensionar, mas foi pensada para esse tamanho, com o status e as probabilidades à direita e os cemitérios abaixo do tabuleiro.
 - **Executável:** a versão atual é executada pela Godot. Ainda não há um `.exe` pronto para download.
 
 ## 7. Validação das probabilidades

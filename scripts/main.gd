@@ -25,8 +25,11 @@ const RED_FLAG = Vector2i(4, 7)
 @onready var board_texture = $TextureRect
 
 # Caminhos atualizados para buscar os nós dentro da Sidebar lateral
-@onready var status_label = $Sidebar/StatusLabel
-@onready var reset_button = $Sidebar/ResetButton
+@onready var status_panel = $Sidebar/StatusPanel
+@onready var status_phase = $Sidebar/StatusPanel/MarginContainer/VBoxContainer/PhaseLabel
+@onready var status_label = $Sidebar/StatusPanel/MarginContainer/VBoxContainer/StatusLabel
+@onready var status_detail = $Sidebar/StatusPanel/MarginContainer/VBoxContainer/StatusDetail
+@onready var reset_button = $Sidebar/StatusPanel/MarginContainer/VBoxContainer/ResetButton
 @onready var probability_summary = $ProbabilityPanel/MarginContainer/VBoxContainer/Summary
 @onready var probability_levels = $ProbabilityPanel/MarginContainer/VBoxContainer/Levels
 @onready var probability_combat = $ProbabilityPanel/MarginContainer/VBoxContainer/Combat
@@ -154,19 +157,51 @@ func create_piece_at(player: GamePiece.Player, level: int, grid_pos: Vector2i):
 
 # Atualiza os títulos dos cemitérios com a quantidade de unidades eliminadas
 func update_discard_titles():
-	blue_discard_title.text = "AZUIS: %d" % eliminated_blue.size()
-	red_discard_title.text = "VERMELHAS: %d" % eliminated_red.size()
+	blue_discard_title.text = "BAIXAS AZUIS · %d / 8" % eliminated_blue.size()
+	red_discard_title.text = "BAIXAS VERMELHAS · %d / 8" % eliminated_red.size()
+	update_graveyard_grid(blue_discard_grid, eliminated_blue, Color("78c2ff"))
+	update_graveyard_grid(red_discard_grid, eliminated_red, Color("ff8c7d"))
+
+# Mantém oito espaços visíveis, inclusive quando o cemitério está vazio.
+func update_graveyard_grid(grid: GridContainer, levels: Array[int], accent: Color) -> void:
+	for child in grid.get_children():
+		grid.remove_child(child)
+		child.queue_free()
+	for index in range(8):
+		var occupied = index < levels.size()
+		var slot = PanelContainer.new()
+		slot.custom_minimum_size = Vector2(48, 52)
+		var style = StyleBoxFlat.new()
+		style.bg_color = Color(accent, 0.12 if occupied else 0.035)
+		style.border_color = Color(accent, 0.4 if occupied else 0.12)
+		style.set_border_width_all(1)
+		style.set_corner_radius_all(5)
+		style.content_margin_top = 3
+		style.content_margin_bottom = 3
+		slot.add_theme_stylebox_override("panel", style)
+		var content = VBoxContainer.new()
+		content.add_theme_constant_override("separation", 0)
+		slot.add_child(content)
+		var icon = TextureRect.new()
+		icon.custom_minimum_size = Vector2(36, 30)
+		icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+		icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
+		content.add_child(icon)
+		var caption = Label.new()
+		caption.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		caption.add_theme_font_size_override("font_size", 11)
+		caption.add_theme_color_override("font_color", accent if occupied else Color("53616a"))
+		caption.text = "NÍVEL %d" % levels[index] if occupied else "—"
+		content.add_child(caption)
+		if occupied and GamePiece.TEXTURES.has(levels[index]):
+			icon.texture = load(GamePiece.TEXTURES[levels[index]])
+		slot.tooltip_text = "Unidade eliminada · nível %d" % levels[index] if occupied else "Nenhuma baixa neste espaço"
+		grid.add_child(slot)
 
 # Limpa os cemitérios ao iniciar/reiniciar uma partida
 func clear_discard_panel():
 	eliminated_blue.clear()
 	eliminated_red.clear()
-
-	for child in blue_discard_grid.get_children():
-		child.queue_free()
-
-	for child in red_discard_grid.get_children():
-		child.queue_free()
 
 	update_discard_titles()
 
@@ -175,43 +210,44 @@ func register_eliminated_piece(piece: GamePiece):
 	if not piece:
 		return
 
-	var target_grid: GridContainer
-
 	if piece.player_owner == GamePiece.Player.BLUE:
 		eliminated_blue.append(piece.level)
-		target_grid = blue_discard_grid
 	else:
 		eliminated_red.append(piece.level)
-		target_grid = red_discard_grid
-
-	var icon = TextureRect.new()
-	icon.custom_minimum_size = Vector2(24, 24)
-	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
-
-	if GamePiece.TEXTURES.has(piece.level):
-		icon.texture = load(GamePiece.TEXTURES[piece.level])
-
-	target_grid.add_child(icon)
 	update_discard_titles()
 	update_probability_hud()
 
 # Controla as mensagens da Label na HUD lateral
 func update_status_msg():
+	var accent = Color("dfbf7a")
 	match current_state:
 		GameState.SETUP_AZUL:
+			status_phase.text = "PREPARAÇÃO"
+			status_label.text = "Posicione seu exército"
 			if blue_pieces_to_place.size() > 0:
-				status_label.text = "Fase de Posicionamento:\nNas casas indicadas, coloque uma peça de nível " + str(blue_pieces_to_place[0])
+				status_detail.text = "Próxima: nível %d · %d/8 posicionadas\nEscolha uma casa destacada." % [blue_pieces_to_place[0], 8 - blue_pieces_to_place.size()]
 		GameState.PLAYING:
-			var turno_texto = "Sua Vez (AZUL)" if current_turn == GamePiece.Player.BLUE else "Pensando... (VERMELHO)"
-			status_label.text = "Status da Partida:\n" + turno_texto
+			status_phase.text = "EM JOGO"
+			var blue_turn = current_turn == GamePiece.Player.BLUE
+			accent = Color("78c2ff") if blue_turn else Color("ff8c7d")
+			status_label.text = "Sua vez de jogar" if blue_turn else "Vermelho pensando..."
+			status_detail.text = "Selecione uma peça azul e escolha uma casa." if blue_turn else "Aguarde a jogada do adversário."
 		GameState.GAME_OVER:
+			status_phase.text = "PARTIDA ENCERRADA"
 			if winner_player == GamePiece.Player.BLUE:
-				status_label.text = "Fim de Jogo:\nVitória do AZUL!"
+				accent = Color("78c2ff")
+				status_label.text = "Vitória do Azul!"
 			elif winner_player == GamePiece.Player.RED:
-				status_label.text = "Fim de Jogo:\nVitória do VERMELHO!"
+				accent = Color("ff8c7d")
+				status_label.text = "Vitória do Vermelho!"
 			else:
-				status_label.text = "Fim de Jogo"
+				status_label.text = "Fim de jogo"
+			status_detail.text = "Inicie uma nova batalha quando quiser."
+	status_phase.add_theme_color_override("font_color", accent)
+	status_label.add_theme_color_override("font_color", accent)
+	var panel_style = status_panel.get_theme_stylebox("panel").duplicate() as StyleBoxFlat
+	panel_style.border_color = accent
+	status_panel.add_theme_stylebox_override("panel", panel_style)
 
 	update_probability_hud()
 

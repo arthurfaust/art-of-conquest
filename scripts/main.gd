@@ -33,6 +33,12 @@ const RED_FLAG = Vector2i(4, 7)
 @onready var probability_summary = $ProbabilityPanel/MarginContainer/VBoxContainer/Summary
 @onready var probability_levels = $ProbabilityPanel/MarginContainer/VBoxContainer/Levels
 @onready var probability_combat = $ProbabilityPanel/MarginContainer/VBoxContainer/Combat
+@onready var calculation_button = $ProbabilityPanel/MarginContainer/VBoxContainer/CalculationButton
+@onready var calculation_overlay = $CalculationOverlay
+@onready var calculation_title = $CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content/Title
+@onready var calculation_context = $CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content/Context
+@onready var calculation_results = $CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content/Results
+@onready var calculation_close = $CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content/CloseButton
 
 # Referências dos painéis de descarte/cemitério
 @onready var blue_discard_grid = $Sidebar/BlueGraveyard/MarginContainer/VBoxContainer/BlueDiscardGrid
@@ -253,6 +259,11 @@ func update_status_msg():
 
 # Detecta cliques do jogador
 func _input(event):
+	if calculation_overlay.visible:
+		if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+			_on_close_calculation_pressed()
+		return
+
 	if current_state == GameState.GAME_OVER or is_animating:
 		return
 		
@@ -568,6 +579,42 @@ func update_probability_hud() -> void:
 			chances["draw_probability"] * 100.0,
 			chances["loss_probability"] * 100.0
 		]
+
+	calculation_button.disabled = not (
+		current_state == GameState.PLAYING and total > 0
+		and is_instance_valid(selected_piece)
+		and selected_piece.player_owner == GamePiece.Player.BLUE
+	)
+	if calculation_button.disabled:
+		calculation_overlay.hide()
+	elif calculation_overlay.visible:
+		update_calculation_card()
+
+func update_calculation_card() -> void:
+	var chances = get_combat_probabilities(selected_piece.level)
+	calculation_title.text = "Ver cálculo · Azul nível %d" % selected_piece.level
+	calculation_context.text = "Duelo contra uma vermelha desconhecida.\nTotal de possibilidades: %d unidades." % chances["total"]
+	calculation_results.text = "\n".join([
+		format_calculation_result("Vitória", chances["wins"], chances["total"], chances["win_probability"]),
+		format_calculation_result("Empate", chances["draws"], chances["total"], chances["draw_probability"]),
+		format_calculation_result("Derrota", chances["losses"], chances["total"], chances["loss_probability"])
+	])
+
+func format_calculation_result(result: String, favorable: int, total: int, probability: float) -> String:
+	var percentage = ("%.2f" % (probability * 100.0)).replace(".", ",")
+	percentage = percentage.trim_suffix("0").trim_suffix("0").trim_suffix(",")
+	return "%s: %d/%d = %s%%" % [result, favorable, total, percentage]
+
+func _on_view_calculation_pressed() -> void:
+	if calculation_button.disabled:
+		return
+	update_calculation_card()
+	calculation_overlay.show()
+	calculation_close.grab_focus()
+
+func _on_close_calculation_pressed() -> void:
+	calculation_overlay.hide()
+	calculation_button.grab_focus()
 
 # Usa apenas informações que o jogador já conhece. Não consulta níveis ocultos.
 # As chances abaixo se referem a um duelo contra uma vermelha desconhecida.

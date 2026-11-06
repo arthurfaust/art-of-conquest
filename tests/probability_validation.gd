@@ -61,10 +61,37 @@ func run_validation() -> void:
 	var game = load("res://scenes/main.tscn").instantiate()
 	game.debug_probabilities = false
 	root.add_child(game)
+	check(game.calculation_button.disabled, "Ver cálculo indisponível sem seleção")
 	for x in range(8):
 		game.handle_setup_click(Vector2i(x, 1))
 	game.handle_grid_click(Vector2i(4, 1))
 	check(game.probability_combat.text.contains("Vitória: 50.0%"), "HUD da azul nível 3")
+	check(not game.calculation_button.disabled, "Ver cálculo habilitado com peça selecionada")
+	game.calculation_button.pressed.emit()
+	check(game.calculation_overlay.visible, "Botão abre o card")
+	check(game.calculation_results.text.contains("Vitória: 4/8 = 50%"), "Card mostra a fração sem simplificar o total")
+	var revealed_for_example: Array[int] = []
+	for piece in game.pieces_container.get_children():
+		if piece.player_owner == GamePiece.Player.RED and piece.level in [1, 4] and piece.level not in revealed_for_example:
+			revealed_for_example.append(piece.level)
+			piece.reveal_level()
+	game.update_probability_hud()
+	check(game.calculation_results.text == "Vitória: 3/6 = 50%\nEmpate: 2/6 = 33,33%\nDerrota: 1/6 = 16,67%", "Card atualiza frações e percentuais do exemplo")
+	game.handle_grid_click(Vector2i(0, 1))
+	check(game.calculation_title.text.contains("nível 1"), "Card acompanha mudança de seleção")
+	check(game.calculation_results.text.contains("Vitória: 0/6 = 0%"), "Card mostra zero casos favoráveis")
+	game.calculation_close.pressed.emit()
+	check(not game.calculation_overlay.visible, "Fechar oculta o card")
+	game.calculation_button.pressed.emit()
+	var escape = InputEventKey.new()
+	escape.pressed = true
+	escape.keycode = KEY_ESCAPE
+	game._input(escape)
+	check(not game.calculation_overlay.visible, "Escape fecha o card")
+	game.handle_grid_click(Vector2i(0, 1))
+	check(game.calculation_button.disabled, "Desseleção desabilita o cálculo")
+	game.handle_grid_click(Vector2i(4, 1))
+	game.calculation_button.pressed.emit()
 	var red_pieces: Array[GamePiece] = []
 	for piece in game.pieces_container.get_children():
 		if piece.player_owner == GamePiece.Player.RED:
@@ -73,6 +100,7 @@ func run_validation() -> void:
 	game.update_probability_hud()
 	check(game.probability_levels.text.contains("Todos os níveis"), "HUD sem desconhecidas")
 	check(game.probability_combat.text.contains("Não há inimigos desconhecidos"), "HUD não estima duelo vazio")
+	check(game.calculation_button.disabled and not game.calculation_overlay.visible, "Sem desconhecidas, cálculo fecha e fica indisponível")
 	var eliminated = red_pieces[0]
 	game.board[eliminated.grid_position.x][eliminated.grid_position.y] = null
 	game.register_eliminated_piece(eliminated)

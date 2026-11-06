@@ -10,6 +10,9 @@ const INITIAL_RED_COUNTS = {
 	4: 2
 }
 
+# Ative no Inspector do nó Main para validar os cálculos na aba Saída.
+@export var debug_probabilities: bool = false
+
 # O tabuleiro começa no topo absoluto (0,0) pois a label superior foi removida
 const OFFSET_Y = 0  
 
@@ -103,6 +106,8 @@ func start_new_game():
 		board_texture.queue_redraw()
 		
 	update_status_msg()
+
+	print_probability_debug()
 
 # Inicializa a matriz do tabuleiro com valores nulos
 func init_board():
@@ -269,6 +274,7 @@ func handle_grid_click(grid_pos: Vector2i):
 		
 		if board_texture:
 			board_texture.queue_redraw()
+		print_probability_debug(selected_piece)
 		return
 		
 	if selected_piece:
@@ -348,6 +354,7 @@ func move_piece(piece: GamePiece, to_pos: Vector2i):
 	await tween.finished
 	
 	await check_for_combat(piece)
+	print_probability_debug()
 
 # Remove a peça individual suavizando escala e opacidade ao mesmo tempo
 func remove_piece_with_animation(piece: GamePiece):
@@ -570,6 +577,34 @@ func get_uncertainty_reduction() -> float:
 		float(current_sample_space)
 		/ float(initial_sample_space)
 	)
+
+# Usa apenas informações que o jogador já conhece. Não consulta níveis ocultos.
+# As chances abaixo se referem a um duelo contra uma vermelha desconhecida.
+func print_probability_debug(blue_piece: GamePiece = null) -> void:
+	if not debug_probabilities or not OS.is_debug_build():
+		return
+
+	print("\n[Probabilidade] Estado conhecido do exército vermelho")
+	print("Reveladas no tabuleiro: ", get_revealed_red_levels())
+	print("Eliminadas: ", eliminated_red)
+	print("Conhecidas: ", get_known_red_levels())
+	print("Desconhecidas por nível: ", get_unknown_red_counts())
+	print("Total desconhecido: ", get_unknown_red_total())
+	print("Probabilidades por nível: ", get_level_probabilities())
+	print("Espaço amostral: ", get_sample_space_size())
+
+	if get_unknown_red_total() == 0:
+		print("Nenhuma unidade vermelha desconhecida; não há duelo desconhecido a estimar.")
+	elif is_instance_valid(blue_piece) and blue_piece.player_owner == GamePiece.Player.BLUE:
+		var chances = get_combat_probabilities(blue_piece.level)
+		print("Azul selecionada: nível ", blue_piece.level)
+		print("Duelo contra vermelha desconhecida — vitória: %.2f%% | empate: %.2f%% | derrota: %.2f%%" % [
+			chances["win_probability"] * 100.0,
+			chances["draw_probability"] * 100.0,
+			chances["loss_probability"] * 100.0
+		])
+	else:
+		print("Selecione uma peça azul para consultar as chances de duelo.")
 
 func switch_turn():
 	current_turn = GamePiece.Player.RED if current_turn == GamePiece.Player.BLUE else GamePiece.Player.BLUE

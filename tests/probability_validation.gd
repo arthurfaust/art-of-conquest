@@ -12,6 +12,7 @@ func check(condition: bool, description: String) -> void:
 		push_error(description)
 
 func run_validation() -> void:
+	root.size = Vector2i(832, 704)
 	var known: Array[int] = []
 	check(ProbabilityManager.get_sample_space_size(known) == 2520, "Espaço inicial")
 	for level in range(1, 5):
@@ -62,6 +63,10 @@ func run_validation() -> void:
 	game.debug_probabilities = false
 	root.add_child(game)
 	check(game.calculation_button.disabled, "Ver cálculo indisponível sem seleção")
+	check(not game.red_calculation_button.disabled, "Cálculo vermelho disponível sem seleção")
+	game.red_calculation_button.pressed.emit()
+	check(game.calculation_overlay.visible and game.calculation_levels.visible and not game.calculation_results.visible, "Botão vermelho abre somente os cálculos de nível")
+	game.calculation_close.pressed.emit()
 	for x in range(8):
 		game.handle_setup_click(Vector2i(x, 1))
 	game.handle_grid_click(Vector2i(4, 1))
@@ -69,7 +74,20 @@ func run_validation() -> void:
 	check(not game.calculation_button.disabled, "Ver cálculo habilitado com peça selecionada")
 	game.calculation_button.pressed.emit()
 	check(game.calculation_overlay.visible, "Botão abre o card")
+	check(game.calculation_results.visible and not game.calculation_levels.visible, "Botão azul abre somente os cálculos de duelo")
 	check(game.calculation_results.text.contains("Vitória: 4/8 = 50%"), "Card mostra a fração sem simplificar o total")
+	check(game.calculation_levels.text == "Nível 1: 2/8 = 25%\nNível 2: 2/8 = 25%\nNível 3: 2/8 = 25%\nNível 4: 2/8 = 25%", "Card mostra a distribuição inicial dos níveis vermelhos")
+	await process_frame
+	await process_frame
+	var card = game.get_node("CalculationOverlay/Backdrop/CenterContainer/Card")
+	check(Rect2(Vector2.ZERO, Vector2(832, 704)).encloses(card.get_global_rect()), "Card de duelo cabe na janela")
+	game.red_calculation_button.pressed.emit()
+	await process_frame
+	await process_frame
+	check(Rect2(Vector2.ZERO, Vector2(832, 704)).encloses(card.get_global_rect()), "Card vermelho cabe na janela")
+	var panel = game.get_node("ProbabilityPanel")
+	check(Rect2(Vector2.ZERO, Vector2(832, 704)).encloses(panel.get_global_rect()), "Painel com dois botões cabe na janela")
+	game.calculation_button.pressed.emit()
 	var revealed_for_example: Array[int] = []
 	for piece in game.pieces_container.get_children():
 		if piece.player_owner == GamePiece.Player.RED and piece.level in [1, 4] and piece.level not in revealed_for_example:
@@ -77,6 +95,7 @@ func run_validation() -> void:
 			piece.reveal_level()
 	game.update_probability_hud()
 	check(game.calculation_results.text == "Vitória: 3/6 = 50%\nEmpate: 2/6 = 33,33%\nDerrota: 1/6 = 16,67%", "Card atualiza frações e percentuais do exemplo")
+	check(game.calculation_levels.text == "Nível 1: 1/6 = 16,67%\nNível 2: 2/6 = 33,33%\nNível 3: 2/6 = 33,33%\nNível 4: 1/6 = 16,67%", "Cálculo da vermelha acompanha as revelações")
 	game.handle_grid_click(Vector2i(0, 1))
 	check(game.calculation_title.text.contains("nível 1"), "Card acompanha mudança de seleção")
 	check(game.calculation_results.text.contains("Vitória: 0/6 = 0%"), "Card mostra zero casos favoráveis")
@@ -90,6 +109,10 @@ func run_validation() -> void:
 	check(not game.calculation_overlay.visible, "Escape fecha o card")
 	game.handle_grid_click(Vector2i(0, 1))
 	check(game.calculation_button.disabled, "Desseleção desabilita o cálculo")
+	game.red_calculation_button.pressed.emit()
+	game.update_probability_hud()
+	check(game.calculation_overlay.visible and game.calculation_levels.visible, "Card vermelho continua disponível sem seleção azul")
+	game.calculation_close.pressed.emit()
 	game.handle_grid_click(Vector2i(4, 1))
 	game.calculation_button.pressed.emit()
 	var red_pieces: Array[GamePiece] = []
@@ -101,6 +124,7 @@ func run_validation() -> void:
 	check(game.probability_levels.text.contains("Todos os níveis"), "HUD sem desconhecidas")
 	check(game.probability_combat.text.contains("Não há inimigos desconhecidos"), "HUD não estima duelo vazio")
 	check(game.calculation_button.disabled and not game.calculation_overlay.visible, "Sem desconhecidas, cálculo fecha e fica indisponível")
+	check(game.red_calculation_button.disabled, "Sem desconhecidas, cálculo vermelho fica indisponível")
 	var eliminated = red_pieces[0]
 	game.board[eliminated.grid_position.x][eliminated.grid_position.y] = null
 	game.register_eliminated_piece(eliminated)

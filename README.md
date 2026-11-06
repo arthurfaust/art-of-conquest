@@ -122,7 +122,9 @@ Ao fim da partida, a mensagem mostra o vencedor e aparece o botão **Jogar novam
 
 O painel à direita mostra quantas vermelhas ainda são desconhecidas, a chance de cada nível e o espaço amostral das distribuições possíveis. Ao selecionar uma peça azul, mostra as chances de vitória, empate e derrota em um duelo contra uma vermelha desconhecida. As informações são atualizadas durante as revelações e eliminações.
 
-Com uma peça azul selecionada, clique em **Ver cálculo** para abrir o card com a quantidade favorável, o total de possibilidades, a fração e o percentual de cada resultado. Por exemplo: `Empate: 2/6 = 33,33%`. O denominador conta as unidades vermelhas ainda desconhecidas. Feche pelo botão **Fechar** ou pela tecla **Esc**.
+Com uma peça azul selecionada, clique em **Cálculo azul** para abrir o card com a quantidade favorável, o total de possibilidades, a fração e o percentual de cada resultado do duelo. Por exemplo: `Empate: 2/6 = 33,33%`. O denominador conta as unidades vermelhas ainda desconhecidas. Feche pelo botão **Fechar** ou pela tecla **Esc**.
+
+O botão separado **Cálculo vermelha** abre o cálculo de cada nível da vermelha desconhecida: por exemplo, `Nível 1: 2/8 = 25%`. Ele pode ser usado sem selecionar uma peça azul. O numerador indica quantas unidades daquele nível ainda são desconhecidas; o denominador é o total de unidades desconhecidas. Esses valores são atualizados com as revelações e eliminações.
 
 Essas chances não representam uma previsão de cerco nem de combate contra uma peça já revelada. Quando todas as vermelhas são conhecidas, o painel informa que não há inimigos desconhecidos para estimar. Para conferir também na aba Saída da Godot, ative **Debug Probabilities** no Inspector do nó Main.
 

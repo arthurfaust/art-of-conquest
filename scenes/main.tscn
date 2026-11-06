@@ -3,12 +3,39 @@
 [ext_resource type="Script" uid="uid://c04kbl5ih2fsr" path="res://scripts/main.gd" id="1_ig7tw"]
 [ext_resource type="Texture2D" uid="uid://3njt3o443rs0" path="res://assets/images/tabuleiro_completo.png" id="2_0xm2m"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_status"]
+bg_color = Color(0.07, 0.1, 0.12, 1)
+border_width_left = 3
+border_color = Color(0.77, 0.66, 0.4, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h2yge"]
 bg_color = Color(0.34901962, 0.2901961, 0.2, 1)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blue"]
+bg_color = Color(0.065, 0.1, 0.14, 1)
+border_width_top = 2
+border_color = Color(0.25, 0.57, 0.85, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_red"]
+bg_color = Color(0.14, 0.075, 0.075, 1)
+border_width_top = 2
+border_color = Color(0.8, 0.32, 0.28, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
 bg_color = Color(0.07058824, 0.078431375, 0.039215688, 1)
@@ -17,38 +44,11 @@ corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_status"]
-bg_color = Color(0.07, 0.1, 0.12, 1)
-border_width_left = 3
-border_color = Color(0.77, 0.66, 0.4, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_left = 10
-corner_radius_bottom_right = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_blue"]
-bg_color = Color(0.065, 0.10, 0.14, 1)
-border_width_top = 2
-border_color = Color(0.25, 0.57, 0.85, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_left = 10
-corner_radius_bottom_right = 10
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_red"]
-bg_color = Color(0.14, 0.075, 0.075, 1)
-border_width_top = 2
-border_color = Color(0.8, 0.32, 0.28, 1)
-corner_radius_top_left = 10
-corner_radius_top_right = 10
-corner_radius_bottom_left = 10
-corner_radius_bottom_right = 10
-
 [node name="Main" type="Node2D" unique_id=508400261]
 script = ExtResource("1_ig7tw")
 debug_probabilities = true
 
-[node name="Background" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="." unique_id=1070701371]
 offset_right = 832.0
 offset_bottom = 704.0
 mouse_filter = 2
@@ -62,110 +62,114 @@ expand_mode = 1
 
 [node name="PiecesContainer" type="Node2D" parent="." unique_id=1943772520]
 
-[node name="Sidebar" type="Control" parent="."]
+[node name="Sidebar" type="Control" parent="." unique_id=1404433950]
 layout_mode = 3
+anchors_preset = 0
 offset_top = 528.0
 offset_right = 512.0
 offset_bottom = 704.0
 mouse_filter = 2
 
-[node name="StatusPanel" type="PanelContainer" parent="Sidebar"]
+[node name="StatusPanel" type="PanelContainer" parent="Sidebar" unique_id=1974196186]
+layout_mode = 0
 offset_left = 528.0
 offset_top = -520.0
 offset_right = 824.0
 offset_bottom = -392.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_status")
 
-[node name="MarginContainer" type="MarginContainer" parent="Sidebar/StatusPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/StatusPanel" unique_id=848531569]
 layout_mode = 2
 theme_override_constants/margin_left = 14
-theme_override_constants/margin_right = 14
 theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 14
 theme_override_constants/margin_bottom = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/StatusPanel/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/StatusPanel/MarginContainer" unique_id=1569420088]
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="PhaseLabel" type="Label" parent="Sidebar/StatusPanel/MarginContainer/VBoxContainer"]
+[node name="PhaseLabel" type="Label" parent="Sidebar/StatusPanel/MarginContainer/VBoxContainer" unique_id=2077405437]
 layout_mode = 2
 theme_override_font_sizes/font_size = 11
 text = "PREPARAÇÃO"
 
-[node name="StatusLabel" type="Label" parent="Sidebar/StatusPanel/MarginContainer/VBoxContainer"]
+[node name="StatusLabel" type="Label" parent="Sidebar/StatusPanel/MarginContainer/VBoxContainer" unique_id=1649948684]
 layout_mode = 2
 theme_override_font_sizes/font_size = 21
 text = "Posicione seu exército"
 autowrap_mode = 2
 
-[node name="StatusDetail" type="Label" parent="Sidebar/StatusPanel/MarginContainer/VBoxContainer"]
+[node name="StatusDetail" type="Label" parent="Sidebar/StatusPanel/MarginContainer/VBoxContainer" unique_id=707494909]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.73, 0.78, 0.76, 1)
 theme_override_font_sizes/font_size = 13
 text = "Escolha as casas destacadas."
 autowrap_mode = 2
 
-[node name="ResetButton" type="Button" parent="Sidebar/StatusPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
+[node name="ResetButton" type="Button" parent="Sidebar/StatusPanel/MarginContainer/VBoxContainer" unique_id=814634362]
 custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
 theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_h2yge")
 text = "Jogar novamente"
 
-[node name="BlueGraveyard" type="PanelContainer" parent="Sidebar"]
+[node name="BlueGraveyard" type="PanelContainer" parent="Sidebar" unique_id=1159033179]
+layout_mode = 0
 offset_left = 8.0
 offset_right = 252.0
 offset_bottom = 168.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_blue")
 
-[node name="MarginContainer" type="MarginContainer" parent="Sidebar/BlueGraveyard"]
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/BlueGraveyard" unique_id=1014124971]
 layout_mode = 2
 theme_override_constants/margin_left = 12
-theme_override_constants/margin_right = 12
 theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/BlueGraveyard/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/BlueGraveyard/MarginContainer" unique_id=1490853231]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="BlueDiscardTitle" type="Label" parent="Sidebar/BlueGraveyard/MarginContainer/VBoxContainer"]
+[node name="BlueDiscardTitle" type="Label" parent="Sidebar/BlueGraveyard/MarginContainer/VBoxContainer" unique_id=686413667]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.47, 0.76, 1, 1)
 theme_override_font_sizes/font_size = 13
 text = "BAIXAS AZUIS · 0 / 8"
 
-[node name="BlueDiscardGrid" type="GridContainer" parent="Sidebar/BlueGraveyard/MarginContainer/VBoxContainer"]
+[node name="BlueDiscardGrid" type="GridContainer" parent="Sidebar/BlueGraveyard/MarginContainer/VBoxContainer" unique_id=591834205]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 6
 columns = 4
 
-[node name="RedGraveyard" type="PanelContainer" parent="Sidebar"]
+[node name="RedGraveyard" type="PanelContainer" parent="Sidebar" unique_id=1317953033]
+layout_mode = 0
 offset_left = 260.0
 offset_right = 504.0
 offset_bottom = 168.0
 theme_override_styles/panel = SubResource("StyleBoxFlat_red")
 
-[node name="MarginContainer" type="MarginContainer" parent="Sidebar/RedGraveyard"]
+[node name="MarginContainer" type="MarginContainer" parent="Sidebar/RedGraveyard" unique_id=931307447]
 layout_mode = 2
 theme_override_constants/margin_left = 12
-theme_override_constants/margin_right = 12
 theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 12
 theme_override_constants/margin_bottom = 10
 
-[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/RedGraveyard/MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="Sidebar/RedGraveyard/MarginContainer" unique_id=903891762]
 layout_mode = 2
 theme_override_constants/separation = 10
 
-[node name="RedDiscardTitle" type="Label" parent="Sidebar/RedGraveyard/MarginContainer/VBoxContainer"]
+[node name="RedDiscardTitle" type="Label" parent="Sidebar/RedGraveyard/MarginContainer/VBoxContainer" unique_id=916748978]
 layout_mode = 2
 theme_override_colors/font_color = Color(1, 0.55, 0.49, 1)
 theme_override_font_sizes/font_size = 13
 text = "BAIXAS VERMELHAS · 0 / 8"
 
-[node name="RedDiscardGrid" type="GridContainer" parent="Sidebar/RedGraveyard/MarginContainer/VBoxContainer"]
+[node name="RedDiscardGrid" type="GridContainer" parent="Sidebar/RedGraveyard/MarginContainer/VBoxContainer" unique_id=1815038503]
 layout_mode = 2
 size_flags_horizontal = 4
 theme_override_constants/h_separation = 6
@@ -209,6 +213,15 @@ theme_override_font_sizes/font_size = 16
 text = "Uma vermelha desconhecida:"
 autowrap_mode = 2
 
+[node name="RedCalculationButton" type="Button" parent="ProbabilityPanel/MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+size_flags_horizontal = 3
+tooltip_text = "Veja o cálculo de cada nível da vermelha desconhecida, sem precisar selecionar uma peça azul."
+theme_override_font_sizes/font_size = 13
+theme_override_styles/normal = SubResource("StyleBoxFlat_h2yge")
+text = "Cálculo vermelha"
+
 [node name="Separator" type="HSeparator" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=115640135]
 layout_mode = 2
 
@@ -218,29 +231,30 @@ theme_override_font_sizes/font_size = 16
 text = "Selecione uma peça azul para ver as chances de duelo."
 autowrap_mode = 2
 
-[node name="CalculationButton" type="Button" parent="ProbabilityPanel/MarginContainer/VBoxContainer"]
-layout_mode = 2
+[node name="CalculationButton" type="Button" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=1099778972]
 custom_minimum_size = Vector2(0, 32)
-disabled = true
-text = "Ver cálculo"
+layout_mode = 2
+size_flags_horizontal = 3
 tooltip_text = "Selecione uma peça azul para consultar a fração e o percentual de cada resultado."
+theme_override_font_sizes/font_size = 13
 theme_override_styles/normal = SubResource("StyleBoxFlat_h2yge")
+disabled = true
+text = "Cálculo azul"
 
 [node name="Explanation" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=2143893327]
 layout_mode = 2
 size_flags_vertical = 10
 theme_override_colors/font_color = Color(0.7, 0.73, 0.65, 1)
 theme_override_font_sizes/font_size = 14
-text = "Duelo contra uma vermelha desconhecida.
-Empate elimina ambas.
+text = "Empate elimina ambas.
 Cerco elimina quem se moveu."
 autowrap_mode = 2
 
-[node name="CalculationOverlay" type="CanvasLayer" parent="."]
+[node name="CalculationOverlay" type="CanvasLayer" parent="." unique_id=65105793]
 layer = 10
 visible = false
 
-[node name="Backdrop" type="ColorRect" parent="CalculationOverlay"]
+[node name="Backdrop" type="ColorRect" parent="CalculationOverlay" unique_id=2097468374]
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -248,7 +262,7 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.015, 0.025, 0.035, 0.85)
 
-[node name="CenterContainer" type="CenterContainer" parent="CalculationOverlay/Backdrop"]
+[node name="CenterContainer" type="CenterContainer" parent="CalculationOverlay/Backdrop" unique_id=1852120514]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -257,43 +271,60 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 
-[node name="Card" type="PanelContainer" parent="CalculationOverlay/Backdrop/CenterContainer"]
-layout_mode = 2
+[node name="Card" type="PanelContainer" parent="CalculationOverlay/Backdrop/CenterContainer" unique_id=315407819]
 custom_minimum_size = Vector2(440, 0)
+layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_status")
 
-[node name="MarginContainer" type="MarginContainer" parent="CalculationOverlay/Backdrop/CenterContainer/Card"]
+[node name="MarginContainer" type="MarginContainer" parent="CalculationOverlay/Backdrop/CenterContainer/Card" unique_id=428468464]
 layout_mode = 2
 theme_override_constants/margin_left = 24
-theme_override_constants/margin_right = 24
 theme_override_constants/margin_top = 24
+theme_override_constants/margin_right = 24
 theme_override_constants/margin_bottom = 24
 
-[node name="Content" type="VBoxContainer" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer"]
+[node name="Content" type="VBoxContainer" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer" unique_id=1422072005]
 layout_mode = 2
-theme_override_constants/separation = 16
+theme_override_constants/separation = 12
 
-[node name="Title" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content"]
+[node name="Title" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=1183989773]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.87, 0.75, 0.48, 1)
 theme_override_font_sizes/font_size = 22
 text = "Ver cálculo"
 
-[node name="Context" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content"]
+[node name="Context" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=621471283]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.73, 0.78, 0.76, 1)
 theme_override_font_sizes/font_size = 15
 autowrap_mode = 2
 
-[node name="Separator" type="HSeparator" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content"]
+[node name="Separator" type="HSeparator" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=2054412903]
 layout_mode = 2
 
-[node name="Results" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content"]
+[node name="LevelTitle" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=286321905]
 layout_mode = 2
-theme_override_font_sizes/font_size = 22
-theme_override_constants/line_spacing = 12
+theme_override_colors/font_color = Color(1, 0.55, 0.49, 1)
+theme_override_font_sizes/font_size = 15
+text = "NÍVEL DA VERMELHA DESCONHECIDA"
 
-[node name="Explanation" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content"]
+[node name="LevelResults" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=1818728376]
+layout_mode = 2
+theme_override_constants/line_spacing = 6
+theme_override_font_sizes/font_size = 20
+
+[node name="CombatTitle" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=1335447869]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.47, 0.76, 1, 1)
+theme_override_font_sizes/font_size = 15
+text = "RESULTADO DO DUELO"
+
+[node name="Results" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=1163648480]
+layout_mode = 2
+theme_override_constants/line_spacing = 6
+theme_override_font_sizes/font_size = 20
+
+[node name="Explanation" type="Label" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=947533563]
 layout_mode = 2
 theme_override_colors/font_color = Color(0.73, 0.78, 0.76, 1)
 theme_override_font_sizes/font_size = 14
@@ -302,12 +333,13 @@ O total conta unidades ainda desconhecidas.
 No empate, ambas as peças são eliminadas."
 autowrap_mode = 2
 
-[node name="CloseButton" type="Button" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content"]
-layout_mode = 2
+[node name="CloseButton" type="Button" parent="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content" unique_id=1954617617]
 custom_minimum_size = Vector2(0, 36)
-text = "Fechar"
+layout_mode = 2
 theme_override_styles/normal = SubResource("StyleBoxFlat_h2yge")
+text = "Fechar"
 
 [connection signal="pressed" from="Sidebar/StatusPanel/MarginContainer/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
 [connection signal="pressed" from="ProbabilityPanel/MarginContainer/VBoxContainer/CalculationButton" to="." method="_on_view_calculation_pressed"]
+[connection signal="pressed" from="ProbabilityPanel/MarginContainer/VBoxContainer/RedCalculationButton" to="." method="_on_view_red_calculation_pressed"]
 [connection signal="pressed" from="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content/CloseButton" to="." method="_on_close_calculation_pressed"]

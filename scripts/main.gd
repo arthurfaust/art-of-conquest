@@ -31,11 +31,14 @@ const RED_FLAG = Vector2i(4, 7)
 @onready var status_label = $Sidebar/StatusPanel/MarginContainer/VBoxContainer/StatusLabel
 @onready var status_detail = $Sidebar/StatusPanel/MarginContainer/VBoxContainer/StatusDetail
 @onready var reset_button = $Sidebar/StatusPanel/MarginContainer/VBoxContainer/ResetButton
-@onready var probability_summary = $ProbabilityPanel/MarginContainer/VBoxContainer/Summary
-@onready var probability_levels = $ProbabilityPanel/MarginContainer/VBoxContainer/Levels
-@onready var probability_combat = $ProbabilityPanel/MarginContainer/VBoxContainer/Combat
-@onready var calculation_button = $ProbabilityPanel/MarginContainer/VBoxContainer/CalculationButton
-@onready var red_calculation_button = $ProbabilityPanel/MarginContainer/VBoxContainer/RedCalculationButton
+@onready var probability_unknown = $ProbabilityPanel/MarginContainer/VBoxContainer/Stats/Unknown/Content/Value
+@onready var probability_sample_space = $ProbabilityPanel/MarginContainer/VBoxContainer/Stats/SampleSpace/Content/Value
+@onready var probability_levels = $ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/Levels
+@onready var probability_level_rows = $ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows.get_children()
+@onready var probability_combat = $ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Combat
+@onready var probability_outcomes = $ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes.get_children()
+@onready var calculation_button = $ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/CalculationButton
+@onready var red_calculation_button = $ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/RedCalculationButton
 @onready var calculation_overlay = $CalculationOverlay
 @onready var calculation_title = $CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content/Title
 @onready var calculation_context = $CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content/Context
@@ -557,18 +560,26 @@ func update_probability_hud() -> void:
 	var known_levels = get_known_red_levels()
 	var counts = ProbabilityManager.get_unknown_red_counts(known_levels)
 	var total = ProbabilityManager.get_unknown_red_total(known_levels)
-	probability_summary.text = "Vermelhas desconhecidas: %d\nEspaço amostral: %d distribuições" % [
-		total, ProbabilityManager.get_sample_space_size(known_levels)
-	]
+	probability_unknown.text = str(total)
+	probability_sample_space.text = str(ProbabilityManager.get_sample_space_size(known_levels))
+	var probabilities = ProbabilityManager.get_level_probabilities(known_levels)
+	probability_levels.visible = total == 0
+	probability_level_rows[0].get_parent().visible = total > 0
+	for index in range(probability_level_rows.size()):
+		var level = index + 1
+		var row = probability_level_rows[index]
+		row.get_node("Remaining").text = "%d un." % counts[level]
+		row.get_node("Bar").value = probabilities[level] * 100.0
+		row.get_node("Percent").text = ("%.1f%%" % (probabilities[level] * 100.0)).replace(".", ",") if total > 0 else "—"
+		row.modulate.a = 1.0 if counts[level] > 0 else 0.4
 
 	if total == 0:
-		probability_levels.text = "Todos os níveis vermelhos são conhecidos."
+		probability_levels.text = "Todos os níveis são conhecidos."
 	else:
-		var probabilities = ProbabilityManager.get_level_probabilities(known_levels)
-		var lines: PackedStringArray = []
-		for level in ProbabilityManager.INITIAL_RED_COUNTS:
-			lines.append("Nível %d: %d unidades · %.1f%%" % [level, counts[level], probabilities[level] * 100.0])
-		probability_levels.text = "Uma vermelha desconhecida:\n" + "\n".join(lines)
+		probability_levels.text = "Chance por nível · %d unidades" % total
+
+	for outcome in probability_outcomes:
+		outcome.get_node("Value").text = "—"
 
 	if current_state == GameState.SETUP_AZUL:
 		probability_combat.text = "Posicione suas peças para começar."
@@ -577,15 +588,13 @@ func update_probability_hud() -> void:
 	elif total == 0:
 		probability_combat.text = "Não há inimigos desconhecidos para estimar um duelo."
 	elif not is_instance_valid(selected_piece):
-		probability_combat.text = "Selecione uma peça azul para ver as chances de duelo."
+		probability_combat.text = "Selecione uma peça azul."
 	else:
 		var chances = ProbabilityManager.get_combat_probabilities(selected_piece.level, known_levels)
-		probability_combat.text = "Azul selecionada: nível %d\nVitória: %.1f%%\nEmpate: %.1f%%\nDerrota: %.1f%%" % [
-			selected_piece.level,
-			chances["win_probability"] * 100.0,
-			chances["draw_probability"] * 100.0,
-			chances["loss_probability"] * 100.0
-		]
+		probability_combat.text = "Peça selecionada · nível %d" % selected_piece.level
+		var keys = ["win_probability", "draw_probability", "loss_probability"]
+		for index in range(probability_outcomes.size()):
+			probability_outcomes[index].get_node("Value").text = ("%.1f%%" % (chances[keys[index]] * 100.0)).replace(".", ",")
 
 	calculation_button.disabled = not (
 		current_state == GameState.PLAYING and total > 0

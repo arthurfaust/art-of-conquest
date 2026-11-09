@@ -120,7 +120,7 @@ Ao fim da partida, a mensagem mostra o vencedor e aparece o botão **Jogar novam
 
 ### Painel de probabilidades
 
-O painel à direita mostra quantas vermelhas ainda são desconhecidas, a chance de cada nível e o espaço amostral das distribuições possíveis. Ao selecionar uma peça azul, mostra as chances de vitória, empate e derrota em um duelo contra uma vermelha desconhecida. As informações são atualizadas durante as revelações e eliminações.
+O painel à direita tem contadores de unidades desconhecidas e espaço amostral no topo. O cartão vermelho mostra a quantidade restante, uma barra e o percentual de cada nível. O cartão azul destaca as chances de vitória, empate e derrota da peça selecionada. Cada botão de cálculo fica abaixo das probabilidades correspondentes. As informações são atualizadas durante as revelações e eliminações.
 
 Com uma peça azul selecionada, clique em **Cálculo azul** para abrir o card com a quantidade favorável, o total de possibilidades, a fração e o percentual de cada resultado do duelo. Por exemplo: `Empate: 2/6 = 33,33%`. O denominador conta as unidades vermelhas ainda desconhecidas. Feche pelo botão **Fechar** ou pela tecla **Esc**.
 

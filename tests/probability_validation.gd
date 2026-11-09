@@ -70,7 +70,7 @@ func run_validation() -> void:
 	for x in range(8):
 		game.handle_setup_click(Vector2i(x, 1))
 	game.handle_grid_click(Vector2i(4, 1))
-	check(game.probability_combat.text.contains("Vitória: 50.0%"), "HUD da azul nível 3")
+	check(game.probability_outcomes[0].get_node("Value").text == "50,0%", "HUD da azul nível 3")
 	check(not game.calculation_button.disabled, "Ver cálculo habilitado com peça selecionada")
 	game.calculation_button.pressed.emit()
 	check(game.calculation_overlay.visible, "Botão abre o card")
@@ -125,13 +125,18 @@ func run_validation() -> void:
 	check(game.probability_combat.text.contains("Não há inimigos desconhecidos"), "HUD não estima duelo vazio")
 	check(game.calculation_button.disabled and not game.calculation_overlay.visible, "Sem desconhecidas, cálculo fecha e fica indisponível")
 	check(game.red_calculation_button.disabled, "Sem desconhecidas, cálculo vermelho fica indisponível")
+	await process_frame
+	await process_frame
+	check(Rect2(Vector2.ZERO, Vector2(832, 704)).encloses(panel.get_global_rect()), "Estado sem desconhecidas cabe no painel")
+	for outcome in game.probability_outcomes:
+		check(outcome.get_node("Value").text == "—", "Sem duelo estimável, remove percentuais anteriores")
 	var eliminated = red_pieces[0]
 	game.board[eliminated.grid_position.x][eliminated.grid_position.y] = null
 	game.register_eliminated_piece(eliminated)
 	check(game.get_known_red_levels().size() == 8, "Revelada eliminada continua conhecida uma única vez")
 	game.start_new_game()
 	check(game.get_unknown_red_total() == 8, "Reinício limpa o conhecimento")
-	check(game.probability_summary.text.contains("2520"), "Reinício atualiza o HUD")
+	check(game.probability_sample_space.text == "2520", "Reinício atualiza o HUD")
 	game.queue_free()
 	await process_frame
 	if failures.is_empty():

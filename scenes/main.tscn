@@ -37,12 +37,197 @@ corner_radius_top_right = 10
 corner_radius_bottom_right = 10
 corner_radius_bottom_left = 10
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lquwl"]
-bg_color = Color(0.07058824, 0.078431375, 0.039215688, 1)
+[sub_resource type="StyleBoxFlat" id="ProbabilityPanelStyle"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.055, 0.075, 0.095, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.16, 0.22, 0.26, 1)
+corner_radius_top_left = 10
+corner_radius_top_right = 10
+corner_radius_bottom_right = 10
+corner_radius_bottom_left = 10
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityMetricStyle"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.08, 0.115, 0.145, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.08, 0.115, 0.145, 1)
 corner_radius_top_left = 6
 corner_radius_top_right = 6
 corner_radius_bottom_right = 6
 corner_radius_bottom_left = 6
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityRedStyle"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.105, 0.085, 0.1, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.28, 0.17, 0.18, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityTrackStyle"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.18, 0.16, 0.19, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.18, 0.16, 0.19, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityFillStyle"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0.89, 0.46, 0.42, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.89, 0.46, 0.42, 1)
+corner_radius_top_left = 2
+corner_radius_top_right = 2
+corner_radius_bottom_right = 2
+corner_radius_bottom_left = 2
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityRedButton"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.22, 0.12, 0.135, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.42, 0.24, 0.25, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityButtonPressed"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.06, 0.09, 0.12, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.5, 0.63, 0.7, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityButtonHover"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.21, 0.28, 0.33, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.48, 0.62, 0.7, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityButtonDisabled"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.09, 0.11, 0.13, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.16, 0.19, 0.22, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityButtonFocus"]
+content_margin_left = 0.0
+content_margin_top = 0.0
+content_margin_right = 0.0
+content_margin_bottom = 0.0
+bg_color = Color(0, 0, 0, 0)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.82, 0.73, 0.48, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityBlueStyle"]
+content_margin_left = 8.0
+content_margin_top = 8.0
+content_margin_right = 8.0
+content_margin_bottom = 8.0
+bg_color = Color(0.065, 0.11, 0.15, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.15, 0.25, 0.33, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="ProbabilityBlueButton"]
+content_margin_left = 4.0
+content_margin_top = 4.0
+content_margin_right = 4.0
+content_margin_bottom = 4.0
+bg_color = Color(0.1, 0.2, 0.28, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+border_color = Color(0.2, 0.38, 0.5, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
 
 [node name="Main" type="Node2D" unique_id=508400261]
 script = ExtResource("1_ig7tw")
@@ -176,78 +361,360 @@ theme_override_constants/h_separation = 6
 theme_override_constants/v_separation = 6
 columns = 4
 
-[node name="ProbabilityPanel" type="PanelContainer" parent="." unique_id=2093009586]
+[node name="ProbabilityPanel" type="PanelContainer" parent="." unique_id=974378867]
 offset_left = 528.0
 offset_top = 152.0
 offset_right = 824.0
 offset_bottom = 696.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_lquwl")
+theme_override_styles/panel = SubResource("ProbabilityPanelStyle")
 
-[node name="MarginContainer" type="MarginContainer" parent="ProbabilityPanel" unique_id=302115197]
+[node name="MarginContainer" type="MarginContainer" parent="ProbabilityPanel" unique_id=1707292335]
 layout_mode = 2
-theme_override_constants/margin_left = 16
-theme_override_constants/margin_top = 16
-theme_override_constants/margin_right = 16
-theme_override_constants/margin_bottom = 16
+theme_override_constants/margin_left = 12
+theme_override_constants/margin_top = 12
+theme_override_constants/margin_right = 12
+theme_override_constants/margin_bottom = 12
 
-[node name="VBoxContainer" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer" unique_id=1248720478]
+[node name="VBoxContainer" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer" unique_id=1076174720]
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="Title" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=976644082]
+[node name="Title" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=980753447]
 layout_mode = 2
-theme_override_colors/font_color = Color(0.9, 0.8, 0.55, 1)
-theme_override_font_sizes/font_size = 20
-text = "PROBABILIDADES"
+theme_override_colors/font_color = Color(0.91, 0.94, 0.95, 1)
+theme_override_font_sizes/font_size = 19
+text = "Probabilidades"
 
-[node name="Summary" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=473330431]
+[node name="Stats" type="HBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=2087437753]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Vermelhas desconhecidas: 8
-Espaço amostral: 2520 distribuições"
-autowrap_mode = 2
+theme_override_constants/separation = 8
 
-[node name="Levels" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=1417985462]
-layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Uma vermelha desconhecida:"
-autowrap_mode = 2
-
-[node name="RedCalculationButton" type="Button" parent="ProbabilityPanel/MarginContainer/VBoxContainer"]
-custom_minimum_size = Vector2(0, 32)
+[node name="Unknown" type="PanelContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/Stats" unique_id=1505219855]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Veja o cálculo de cada nível da vermelha desconhecida, sem precisar selecionar uma peça azul."
-theme_override_font_sizes/font_size = 13
-theme_override_styles/normal = SubResource("StyleBoxFlat_h2yge")
-text = "Cálculo vermelha"
+theme_override_styles/panel = SubResource("ProbabilityMetricStyle")
 
-[node name="Separator" type="HSeparator" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=115640135]
+[node name="Content" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/Stats/Unknown" unique_id=1339907644]
 layout_mode = 2
+theme_override_constants/separation = 0
 
-[node name="Combat" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=366285872]
+[node name="Caption" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/Stats/Unknown/Content" unique_id=466285799]
 layout_mode = 2
-theme_override_font_sizes/font_size = 16
-text = "Selecione uma peça azul para ver as chances de duelo."
-autowrap_mode = 2
+theme_override_colors/font_color = Color(0.57, 0.66, 0.71, 1)
+theme_override_font_sizes/font_size = 10
+text = "DESCONHECIDAS"
 
-[node name="CalculationButton" type="Button" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=1099778972]
-custom_minimum_size = Vector2(0, 32)
+[node name="Value" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/Stats/Unknown/Content" unique_id=147921752]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "8"
+
+[node name="SampleSpace" type="PanelContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/Stats" unique_id=832236723]
 layout_mode = 2
 size_flags_horizontal = 3
-tooltip_text = "Selecione uma peça azul para consultar a fração e o percentual de cada resultado."
-theme_override_font_sizes/font_size = 13
-theme_override_styles/normal = SubResource("StyleBoxFlat_h2yge")
-disabled = true
-text = "Cálculo azul"
+theme_override_styles/panel = SubResource("ProbabilityMetricStyle")
 
-[node name="Explanation" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=2143893327]
+[node name="Content" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/Stats/SampleSpace" unique_id=372656624]
+layout_mode = 2
+theme_override_constants/separation = 0
+
+[node name="Caption" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/Stats/SampleSpace/Content" unique_id=881744751]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.57, 0.66, 0.71, 1)
+theme_override_font_sizes/font_size = 10
+text = "ESPAÇO AMOSTRAL"
+
+[node name="Value" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/Stats/SampleSpace/Content" unique_id=189038041]
+layout_mode = 2
+theme_override_font_sizes/font_size = 23
+text = "2520"
+
+[node name="RedSection" type="PanelContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=1342782328]
+layout_mode = 2
+theme_override_styles/panel = SubResource("ProbabilityRedStyle")
+
+[node name="Content" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection" unique_id=1183796656]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Heading" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content" unique_id=1413394970]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.57, 0.51, 1)
+theme_override_font_sizes/font_size = 11
+text = "VERMELHA DESCONHECIDA"
+
+[node name="Levels" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content" unique_id=206262922]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.76, 1)
+theme_override_font_sizes/font_size = 12
+text = "Chance por nível · 8 unidades"
+autowrap_mode = 2
+
+[node name="LevelRows" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content" unique_id=1953222863]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Level1" type="HBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows" unique_id=372245340]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Badge" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level1" unique_id=757377373]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "N1"
+
+[node name="Remaining" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level1" unique_id=751017764]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61, 0.68, 0.73, 1)
+theme_override_font_sizes/font_size = 11
+text = "2 un."
+
+[node name="Bar" type="ProgressBar" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level1" unique_id=1907495877]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/background = SubResource("ProbabilityTrackStyle")
+theme_override_styles/fill = SubResource("ProbabilityFillStyle")
+value = 25.0
+show_percentage = false
+
+[node name="Percent" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level1" unique_id=2134840898]
+custom_minimum_size = Vector2(47, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.76, 0.71, 1)
+theme_override_font_sizes/font_size = 13
+text = "25,0%"
+horizontal_alignment = 2
+
+[node name="Level2" type="HBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows" unique_id=1723247149]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Badge" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level2" unique_id=1748189507]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "N2"
+
+[node name="Remaining" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level2" unique_id=695964227]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61, 0.68, 0.73, 1)
+theme_override_font_sizes/font_size = 11
+text = "2 un."
+
+[node name="Bar" type="ProgressBar" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level2" unique_id=1226000141]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/background = SubResource("ProbabilityTrackStyle")
+theme_override_styles/fill = SubResource("ProbabilityFillStyle")
+value = 25.0
+show_percentage = false
+
+[node name="Percent" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level2" unique_id=1061472296]
+custom_minimum_size = Vector2(47, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.76, 0.71, 1)
+theme_override_font_sizes/font_size = 13
+text = "25,0%"
+horizontal_alignment = 2
+
+[node name="Level3" type="HBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows" unique_id=1686459153]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Badge" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level3" unique_id=311764020]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "N3"
+
+[node name="Remaining" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level3" unique_id=229967401]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61, 0.68, 0.73, 1)
+theme_override_font_sizes/font_size = 11
+text = "2 un."
+
+[node name="Bar" type="ProgressBar" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level3" unique_id=294274307]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/background = SubResource("ProbabilityTrackStyle")
+theme_override_styles/fill = SubResource("ProbabilityFillStyle")
+value = 25.0
+show_percentage = false
+
+[node name="Percent" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level3" unique_id=1272655889]
+custom_minimum_size = Vector2(47, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.76, 0.71, 1)
+theme_override_font_sizes/font_size = 13
+text = "25,0%"
+horizontal_alignment = 2
+
+[node name="Level4" type="HBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows" unique_id=230616091]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="Badge" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level4" unique_id=1622744010]
+custom_minimum_size = Vector2(24, 0)
+layout_mode = 2
+theme_override_font_sizes/font_size = 12
+text = "N4"
+
+[node name="Remaining" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level4" unique_id=1224732531]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.61, 0.68, 0.73, 1)
+theme_override_font_sizes/font_size = 11
+text = "2 un."
+
+[node name="Bar" type="ProgressBar" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level4" unique_id=1146033328]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 4
+mouse_filter = 2
+theme_override_styles/background = SubResource("ProbabilityTrackStyle")
+theme_override_styles/fill = SubResource("ProbabilityFillStyle")
+value = 25.0
+show_percentage = false
+
+[node name="Percent" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/LevelRows/Level4" unique_id=1790381014]
+custom_minimum_size = Vector2(47, 0)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.98, 0.76, 0.71, 1)
+theme_override_font_sizes/font_size = 13
+text = "25,0%"
+horizontal_alignment = 2
+
+[node name="RedCalculationButton" type="Button" parent="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content" unique_id=853770085]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ProbabilityRedButton")
+theme_override_styles/pressed = SubResource("ProbabilityButtonPressed")
+theme_override_styles/hover = SubResource("ProbabilityButtonHover")
+theme_override_styles/disabled = SubResource("ProbabilityButtonDisabled")
+theme_override_styles/focus = SubResource("ProbabilityButtonFocus")
+text = "Mostrar cálculo"
+
+[node name="BlueSection" type="PanelContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=1639926481]
+layout_mode = 2
+theme_override_styles/panel = SubResource("ProbabilityBlueStyle")
+
+[node name="Content" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection" unique_id=1662598387]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Heading" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content" unique_id=588680021]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.49, 0.76, 0.98, 1)
+theme_override_font_sizes/font_size = 11
+text = "DUELO DA PEÇA AZUL"
+
+[node name="Combat" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content" unique_id=821119331]
+custom_minimum_size = Vector2(0, 32)
+layout_mode = 2
+theme_override_colors/font_color = Color(0.65, 0.72, 0.76, 1)
+theme_override_font_sizes/font_size = 12
+text = "Selecione uma peça azul."
+autowrap_mode = 2
+
+[node name="Outcomes" type="HBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content" unique_id=1491135094]
+layout_mode = 2
+theme_override_constants/separation = 3
+
+[node name="Win" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes" unique_id=803008301]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="Caption" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes/Win" unique_id=737274422]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.85, 0.7, 1)
+theme_override_font_sizes/font_size = 10
+text = "VITÓRIA"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes/Win" unique_id=427288361]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.63, 0.85, 0.7, 1)
+theme_override_font_sizes/font_size = 21
+text = "—"
+horizontal_alignment = 1
+
+[node name="Draw" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes" unique_id=1821658710]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="Caption" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes/Draw" unique_id=1536680004]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.77, 0.5, 1)
+theme_override_font_sizes/font_size = 10
+text = "EMPATE"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes/Draw" unique_id=189969092]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.9, 0.77, 0.5, 1)
+theme_override_font_sizes/font_size = 21
+text = "—"
+horizontal_alignment = 1
+
+[node name="Loss" type="VBoxContainer" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes" unique_id=2142987228]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 1
+
+[node name="Caption" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes/Loss" unique_id=230646149]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.57, 0.51, 1)
+theme_override_font_sizes/font_size = 10
+text = "DERROTA"
+horizontal_alignment = 1
+
+[node name="Value" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/Outcomes/Loss" unique_id=1147844228]
+layout_mode = 2
+theme_override_colors/font_color = Color(0.96, 0.57, 0.51, 1)
+theme_override_font_sizes/font_size = 21
+text = "—"
+horizontal_alignment = 1
+
+[node name="CalculationButton" type="Button" parent="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content" unique_id=709967082]
+custom_minimum_size = Vector2(0, 28)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 12
+theme_override_styles/normal = SubResource("ProbabilityBlueButton")
+theme_override_styles/pressed = SubResource("ProbabilityButtonPressed")
+theme_override_styles/hover = SubResource("ProbabilityButtonHover")
+theme_override_styles/disabled = SubResource("ProbabilityButtonDisabled")
+theme_override_styles/focus = SubResource("ProbabilityButtonFocus")
+text = "Mostrar cálculo"
+
+[node name="Explanation" type="Label" parent="ProbabilityPanel/MarginContainer/VBoxContainer" unique_id=1517906856]
 layout_mode = 2
 size_flags_vertical = 10
-theme_override_colors/font_color = Color(0.7, 0.73, 0.65, 1)
-theme_override_font_sizes/font_size = 14
-text = "Empate elimina ambas.
-Cerco elimina quem se moveu."
+theme_override_colors/font_color = Color(0.53, 0.62, 0.67, 1)
+theme_override_font_sizes/font_size = 11
+text = "Duelo 1×1 · cerco não usa níveis."
 autowrap_mode = 2
 
 [node name="CalculationOverlay" type="CanvasLayer" parent="." unique_id=65105793]
@@ -340,6 +807,6 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_h2yge")
 text = "Fechar"
 
 [connection signal="pressed" from="Sidebar/StatusPanel/MarginContainer/VBoxContainer/ResetButton" to="." method="_on_reset_button_pressed"]
-[connection signal="pressed" from="ProbabilityPanel/MarginContainer/VBoxContainer/CalculationButton" to="." method="_on_view_calculation_pressed"]
-[connection signal="pressed" from="ProbabilityPanel/MarginContainer/VBoxContainer/RedCalculationButton" to="." method="_on_view_red_calculation_pressed"]
+[connection signal="pressed" from="ProbabilityPanel/MarginContainer/VBoxContainer/RedSection/Content/RedCalculationButton" to="." method="_on_view_red_calculation_pressed"]
+[connection signal="pressed" from="ProbabilityPanel/MarginContainer/VBoxContainer/BlueSection/Content/CalculationButton" to="." method="_on_view_calculation_pressed"]
 [connection signal="pressed" from="CalculationOverlay/Backdrop/CenterContainer/Card/MarginContainer/Content/CloseButton" to="." method="_on_close_calculation_pressed"]

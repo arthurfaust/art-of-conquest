@@ -12,3 +12,6 @@ func _on_jogar_button_pressed():
 func _on_sair_button_pressed():
 	# Fecha o jogo
 	get_tree().quit()
+
+func _on_tutorial_button_pressed():
+	get_tree().change_scene_to_file("res://scenes/tutorial.tscn")

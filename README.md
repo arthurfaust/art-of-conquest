@@ -57,7 +57,15 @@ git clone https://github.com/arthurfaust/art-of-conquest.git
 
 ### Iniciar uma partida
 
-No menu principal, clique em **Jogar**. Para fechar o jogo, clique em **Sair**.
+No menu principal, clique em **Jogar**. Para aprender praticando, escolha **Tutorial**. Para fechar o jogo, clique em **Sair**.
+
+### Tutorial interativo
+
+O tutorial usa cenários preparados e orientações no alto à direita. Clique nas **casas douradas** para posicionar, selecionar e mover suas peças. Abra os cards de cálculo quando solicitado e feche-os para prosseguir. Cinco perguntas verificam a compreensão das probabilidades, do empate e do cerco; uma resposta errada mostra uma explicação e permite tentar novamente.
+
+Você pratica posicionamento, alternância de turnos, movimento, duelo, revelação dos inimigos, atualização das probabilidades, empate, cerco e captura da bandeira. O turno vermelho é demonstrado em uma etapa; nos demais exercícios, a IA fica suspensa para permitir o treino. Cada novo cenário repõe os exércitos e as informações conhecidas.
+
+Use **Sair** no painel de instruções para retornar ao menu. Ao concluir, escolha **Jogar partida**, **Repetir tutorial** ou **Voltar ao menu**. Na partida normal, a IA joga a cada turno e os movimentos são livres dentro das regras.
 
 ### Controles
 
@@ -130,7 +138,6 @@ Essas chances não representam uma previsão de cerco nem de combate contra uma 
 
 ## 6. Limitações conhecidas e funcionalidades não implementadas
 
-- **Sem tutorial dentro do jogo:** este README é o guia de uso.
 - **Só um modo de jogo:** 1 jogador contra o computador. Não há multijogador local nem online.
 - **IA simples:** o computador escolhe uma jogada aleatória entre as possíveis, dando preferência a avançar. Ele não usa as peças reveladas nem evita cercos.
 - **Habilidades especiais das unidades** (previstas no GDD) não foram implementadas. Todo duelo é decidido só pelo nível.
@@ -151,6 +158,8 @@ O script `tests/probability_validation.gd` verifica os casos extremos, as 81 com
 
 O resultado esperado é `PROBABILITY_VALIDATION_OK`, com código de saída zero. Para testar a apresentação visual, execute o jogo com F5, selecione peças de níveis diferentes, confira os números após combates e reinicie a partida.
 
+O script `tests/tutorial_validation.gd` percorre o tutorial completo, verifica cliques e respostas incorretos, cards, combates, informações conhecidas, vitória, reinício e retorno ao menu. Execute com o mesmo comando, substituindo o caminho do script; o resultado esperado é `TUTORIAL_VALIDATION_OK`.
+
 ## 8. Estrutura do projeto
 
 ```
@@ -159,10 +168,12 @@ art-of-conquest/
 ├── scenes/
 │   ├── menu.tscn             # Menu principal (cena inicial)
 │   ├── main.tscn             # Partida: tabuleiro e HUD
+│   ├── tutorial.tscn         # Tutorial que reutiliza a cena da partida
 │   └── piece.tscn            # Peça do tabuleiro
 ├── scripts/
-│   ├── menu.gd               # Botões Jogar e Sair
+│   ├── menu.gd               # Botões Jogar, Tutorial e Sair
 │   ├── main.gd               # Turnos, combate, IA, vitória e integração das probabilidades
+│   ├── tutorial.gd           # Etapas guiadas, cenários e perguntas do tutorial
 │   ├── probability_manager.gd # Cálculos de probabilidades e espaço amostral
 │   ├── piece.gd              # Aparência, revelação e seleção da peça
 │   └── audio_manager.gd      # Música de fundo global (autoload)

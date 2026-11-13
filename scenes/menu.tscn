@@ -93,7 +93,7 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -116.0
-offset_top = -136.0
+offset_top = -174.0
 offset_right = 116.0
 offset_bottom = -32.0
 grow_horizontal = 2
@@ -112,8 +112,19 @@ theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
 theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
 text = "Jogar"
 
+[node name="TutorialButton" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(232, 36)
+layout_mode = 2
+mouse_default_cursor_shape = 2
+theme_override_font_sizes/font_size = 17
+theme_override_styles/normal = SubResource("StyleBoxFlat_mae5d")
+theme_override_styles/hover = SubResource("StyleBoxFlat_hover")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_pressed")
+theme_override_styles/focus = SubResource("StyleBoxFlat_focus")
+text = "Tutorial"
+
 [node name="SairButton" type="Button" parent="VBoxContainer" unique_id=586649188]
-custom_minimum_size = Vector2(232, 46)
+custom_minimum_size = Vector2(232, 36)
 layout_mode = 2
 mouse_default_cursor_shape = 2
 theme_override_font_sizes/font_size = 18
@@ -125,3 +136,4 @@ text = "Sair"
 
 [connection signal="pressed" from="VBoxContainer/JogarButton" to="." method="_on_jogar_button_pressed"]
 [connection signal="pressed" from="VBoxContainer/SairButton" to="." method="_on_sair_button_pressed"]
+[connection signal="pressed" from="VBoxContainer/TutorialButton" to="." method="_on_tutorial_button_pressed"]

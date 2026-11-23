@@ -152,3 +152,20 @@ func _draw():
 		
 		var border_color = Color(0.0, 0.5, 1.0) if player_owner == Player.BLUE else Color(1.0, 0.2, 0.2)
 		draw_rect(rect, border_color, false, thickness)
+		_draw_team_marker(tex_size, border_color)
+
+# Marcador de forma no canto, para identificar o time sem depender só da cor:
+# círculo para o Azul e triângulo para o Vermelho.
+func _draw_team_marker(tex_size: Vector2, team_color: Color):
+	var unit = 1.0 / scale.x
+	var center = Vector2(tex_size.x / 2.0, -tex_size.y / 2.0) + Vector2(-10.0, 10.0) * unit
+	draw_circle(center, 8.0 * unit, Color(0.02, 0.04, 0.06, 0.85))
+	if player_owner == Player.BLUE:
+		draw_circle(center, 5.0 * unit, team_color)
+	else:
+		var radius = 6.0 * unit
+		draw_colored_polygon(PackedVector2Array([
+			center + Vector2(0.0, -radius),
+			center + Vector2(radius * 0.9, radius * 0.65),
+			center + Vector2(-radius * 0.9, radius * 0.65)
+		]), team_color)

@@ -5,9 +5,18 @@ Jogo de tabuleiro digital de **estratégia e dedução por turnos**. Você coman
 Projeto de Aprendizagem Colaborativa Extensionista IV — Engenharia de Software, 4º semestre, Turma B.
 Integrantes: Arthur Faust Locatelli.
 
-📄 **GDD (Game Design Document):** [`docs/GDD-Art-of-Conquest-Atualizado.pdf`](docs/GDD-Art-of-Conquest-Atualizado.pdf) (também em [.docx](docs/GDD-Art-of-Conquest-Atualizado.docx)).
+📄 **GDD (Game Design Document):** [`docs/GDD-Art-of-Conquest-Atualizado.pdf`](docs/GDD-Art-of-Conquest-Atualizado.pdf) (também em [.docx](docs/GDD-Art-of-Conquest-Atualizado.docx)). A seção *Ajustes da Entrega Final* do GDD lista o que mudou a partir das devolutivas.
 
 ---
+
+## 0. Jogar sem instalar nada (executável para Windows)
+
+1. Na página do repositório, abra **Releases** e baixe `ArtOfConquest-v1.0-Windows.zip`.
+2. Extraia o `.zip` e dê dois cliques em **`ArtOfConquest.exe`**.
+3. Se o Windows mostrar *"O Windows protegeu o computador"*, clique em **Mais informações → Executar assim mesmo** (o executável não tem assinatura digital).
+4. No menu, escolha **Tutorial** na primeira vez ou **Jogar**.
+
+Requisito: Windows 10 ou 11 (64 bits). As seções 1 a 4 abaixo são para quem quer abrir o **código-fonte** na Godot.
 
 ## 1. Requisitos
 
@@ -59,6 +68,8 @@ git clone https://github.com/arthurfaust/art-of-conquest.git
 
 No menu principal, clique em **Jogar**. Para aprender praticando, escolha **Tutorial**. Para fechar o jogo, clique em **Sair**.
 
+Na primeira partida, aparece o **briefing da missão** (*Operação Bandeira Vermelha*), com a história, o objetivo e um resumo das regras. Clique em **Começar missão** para posicionar seu exército ou em **Fazer o tutorial**. O briefing pode ser revisto a qualquer momento em **Menu → Como jogar**.
+
 ### Tutorial interativo
 
 O tutorial usa cenários preparados e orientações no alto à direita. Clique nas **casas douradas** para posicionar, selecionar e mover suas peças. Abra os cards de cálculo quando solicitado e feche-os para prosseguir. Cinco perguntas verificam a compreensão das probabilidades, do empate e do cerco; uma resposta errada mostra uma explicação e permite tentar novamente.
@@ -78,9 +89,13 @@ O jogo é controlado **só com o mouse (botão esquerdo)**:
 | Clicar na mesma peça de novo | Cancela a seleção |
 | Clicar em outra peça sua | Troca a seleção |
 | Clicar em uma casa destacada | Move a peça selecionada para essa casa |
+| Botão **Menu** (canto do cartão de status) ou tecla **Esc** | Pausa a partida: Continuar, Reiniciar partida, Como jogar, volume de Música e Efeitos e Voltar ao menu |
+| **Esc** com a pausa aberta | Retoma a partida |
 | Botão **Jogar novamente** | Aparece no fim da partida e começa um novo jogo |
 
 Os cliques são ignorados enquanto há animações, combates ou enquanto o computador está jogando.
+
+Cada peça tem uma borda colorida e um **marcador de forma** no canto: **círculo** para o Azul e **triângulo** para o Vermelho, para identificar os times sem depender só da cor.
 
 ### Unidades
 
@@ -118,7 +133,11 @@ As peças eliminadas aparecem nos **cemitérios** abaixo do tabuleiro: **BAIXAS 
 | **Vitória** | Mover uma peça sua até a **bandeira vermelha** (parte de baixo do tabuleiro, coluna 5) **ou** eliminar todas as peças vermelhas |
 | **Derrota** | Uma peça vermelha chegar à **bandeira azul** (parte de cima, coluna 5) **ou** todas as suas peças serem eliminadas |
 
-Ao fim da partida, a mensagem mostra o vencedor e aparece o botão **Jogar novamente**. Não há sistema de progressão entre partidas: cada partida começa do zero.
+Ao fim da partida, a **tela de resultado** mostra **VITÓRIA** ou **DERROTA**, o motivo, os turnos jogados e as baixas de cada lado, com os botões **Jogar novamente**, **Ver o tabuleiro** e **Voltar ao menu**. Não há sistema de progressão entre partidas: cada partida começa do zero.
+
+### Música e volume
+
+A trilha reage à partida: fica abafada no menu, abre na batalha e fica mais intensa quando uma peça vermelha chega a até 3 casas da sua bandeira. No suspense de cada combate, entra um **batimento cardíaco**. Os volumes de **Música** e **Efeitos** são ajustados em **Menu** (Esc) e ficam salvos para as próximas vezes. Ao gravar a tela com comentários, reduza a música para cerca de 30–40%.
 
 ### Dicas
 
@@ -130,9 +149,9 @@ Ao fim da partida, a mensagem mostra o vencedor e aparece o botão **Jogar novam
 
 O painel à direita tem contadores de unidades desconhecidas e espaço amostral no topo. O cartão vermelho mostra a quantidade restante, uma barra e o percentual de cada nível. O cartão azul destaca as chances de vitória, empate e derrota da peça selecionada. Cada botão de cálculo fica abaixo das probabilidades correspondentes. As informações são atualizadas durante as revelações e eliminações.
 
-Com uma peça azul selecionada, clique em **Cálculo azul** para abrir o card com a quantidade favorável, o total de possibilidades, a fração e o percentual de cada resultado do duelo. Por exemplo: `Empate: 2/6 = 33,33%`. O denominador conta as unidades vermelhas ainda desconhecidas. Feche pelo botão **Fechar** ou pela tecla **Esc**.
+Com uma peça azul selecionada, clique no botão **Mostrar cálculo** do cartão azul para abrir o card com a quantidade favorável, o total de possibilidades, a fração e o percentual de cada resultado do duelo. Por exemplo: `Empate: 2/6 = 33,33%`. O denominador conta as unidades vermelhas ainda desconhecidas. Feche pelo botão **Fechar** ou pela tecla **Esc**.
 
-O botão separado **Cálculo vermelha** abre o cálculo de cada nível da vermelha desconhecida: por exemplo, `Nível 1: 2/8 = 25%`. Ele pode ser usado sem selecionar uma peça azul. O numerador indica quantas unidades daquele nível ainda são desconhecidas; o denominador é o total de unidades desconhecidas. Esses valores são atualizados com as revelações e eliminações.
+O botão **Mostrar cálculo** do cartão vermelho abre o cálculo de cada nível da vermelha desconhecida: por exemplo, `Nível 1: 2/8 = 25%`. Ele pode ser usado sem selecionar uma peça azul. O numerador indica quantas unidades daquele nível ainda são desconhecidas; o denominador é o total de unidades desconhecidas. Esses valores são atualizados com as revelações e eliminações.
 
 Essas chances não representam uma previsão de cerco nem de combate contra uma peça já revelada. Quando todas as vermelhas são conhecidas, o painel informa que não há inimigos desconhecidos para estimar. Para conferir também na aba Saída da Godot, ative **Debug Probabilities** no Inspector do nó Main.
 
@@ -142,13 +161,13 @@ Essas chances não representam uma previsão de cerco nem de combate contra uma 
 - **IA simples:** o computador escolhe uma jogada aleatória entre as possíveis, dando preferência a avançar. Ele não usa as peças reveladas nem evita cercos.
 - **Habilidades especiais das unidades** (previstas no GDD) não foram implementadas. Todo duelo é decidido só pelo nível.
 - **General (nível 5):** a arte existe, mas a unidade não participa da partida.
-- **Sem volta ao menu:** dentro da partida não há botão para voltar ao menu. Para sair, feche a janela.
-- **Sem opções de volume, pausa ou salvamento.**
+- **Sem salvamento de partida:** fechar o jogo encerra a partida em andamento (só os volumes ficam salvos).
 - **Bandeira azul:** o jogador pode mover uma peça para a casa da própria bandeira (o computador não pode fazer isso com a dele).
 - **Janela de 832 x 704:** a interface escala ao redimensionar, mas foi pensada para esse tamanho, com o status e as probabilidades à direita e os cemitérios abaixo do tabuleiro.
-- **Executável:** a versão atual é executada pela Godot. Ainda não há um `.exe` pronto para download.
+- **Plataforma:** há executável apenas para Windows 64 bits; não há versão Web, Linux ou macOS pronta.
+- **Executável sem assinatura digital:** o Windows SmartScreen pode pedir confirmação na primeira execução.
 
-## 7. Validação das probabilidades
+## 7. Testes automatizados
 
 O script `tests/probability_validation.gd` verifica os casos extremos, as 81 combinações válidas de quantidades conhecidas por nível e a integração com o HUD. Execute no PowerShell, dentro da pasta do projeto, ajustando o caminho da Godot se necessário:
 
@@ -160,7 +179,22 @@ O resultado esperado é `PROBABILITY_VALIDATION_OK`, com código de saída zero.
 
 O script `tests/tutorial_validation.gd` percorre o tutorial completo, verifica cliques e respostas incorretos, cards, combates, informações conhecidas, vitória, reinício e retorno ao menu. Execute com o mesmo comando, substituindo o caminho do script; o resultado esperado é `TUTORIAL_VALIDATION_OK`.
 
-## 8. Estrutura do projeto
+O script `tests/match_flow_validation.gd` verifica os ajustes da entrega final: briefing, bloqueio do tabuleiro, pausa por Esc e pelo botão Menu, volumes, climas da música, batimento, tela de resultado, reinício, volta ao menu e tutorial sem briefing. O resultado esperado é `MATCH_FLOW_VALIDATION_OK`.
+
+## 8. Como gerar o executável
+
+1. Na Godot, abra **Editor → Gerenciar Modelos de Exportação** (*Manage Export Templates*) e baixe os modelos da versão 4.7.2.
+2. Abra **Projeto → Exportar**, selecione o preset **Windows Desktop** e clique em **Exportar Projeto**. O arquivo é gerado em `build/windows/ArtOfConquest.exe`, com os recursos embutidos (um único arquivo).
+
+Por linha de comando, dentro da pasta do projeto:
+
+```powershell
+& 'C:\Program Files\Godot\Godot_v4.7.2-stable_win64.exe' --headless --path . --export-release "Windows Desktop" build/windows/ArtOfConquest.exe
+```
+
+A pasta `build/` não vai para o Git; o executável é publicado na página **Releases** do GitHub.
+
+## 9. Estrutura do projeto
 
 ```
 art-of-conquest/
@@ -173,15 +207,17 @@ art-of-conquest/
 ├── scripts/
 │   ├── menu.gd               # Botões Jogar, Tutorial e Sair
 │   ├── main.gd               # Turnos, combate, IA, vitória e integração das probabilidades
+│   ├── game_menus.gd         # Briefing da missão, menu de pausa e tela de resultado
 │   ├── tutorial.gd           # Etapas guiadas, cenários e perguntas do tutorial
 │   ├── probability_manager.gd # Cálculos de probabilidades e espaço amostral
 │   ├── piece.gd              # Aparência, revelação e seleção da peça
-│   └── audio_manager.gd      # Música de fundo global (autoload)
+│   └── audio_manager.gd      # Música adaptativa, batimento e volumes (autoload)
+├── tests/                    # Testes automatizados (probabilidades, tutorial e fluxo da partida)
 ├── assets/
 │   ├── images/               # Sprites das unidades, tabuleiro, bandeiras e ícone
 │   └── sounds/               # Música tema e efeitos sonoros
-├── docs/                     # GDD atualizado (.pdf e .docx)
-├── icon.svg                  # Ícone do projeto na Godot
+├── docs/                     # GDD atualizado (.pdf e .docx) e documentos de gestão
+├── icon.svg                  # Ícone padrão da Godot (a janela usa o tanque de assets/images)
 ├── default_bus_layout.tres   # Configuração dos canais de áudio
 └── export_presets.cfg        # Configuração de exportação para Windows
 ```

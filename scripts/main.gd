@@ -7,6 +7,13 @@ const ProbabilityManager = preload("res://scripts/probability_manager.gd")
 
 # Ative no Inspector do nó Main para validar os cálculos na aba Saída.
 @export var debug_probabilities: bool = false
+# Mostra o briefing da missão na primeira partida da sessão (o tutorial desliga).
+@export var show_briefing: bool = true
+
+const GameMenus = preload("res://scripts/game_menus.gd")
+
+# O briefing aparece uma vez por sessão; depois fica disponível na pausa.
+static var briefing_seen := false
 
 # O tabuleiro começa no topo absoluto (0,0) pois a label superior foi removida
 const OFFSET_Y = 0  
@@ -69,6 +76,12 @@ var is_animating = false
 var eliminated_blue: Array[int] = []
 var eliminated_red: Array[int] = []
 
+# Telas de briefing, pausa e resultado, e dados exibidos no fim da partida
+var menus: CanvasLayer
+var menu_button: Button
+var turn_count := 0
+var win_reason := ""
+
 # --- TEXTURAS DOS OBJETIVOS ---
 var tex_bandeira_azul = load("res://assets/images/bandeira_azul.png")
 var tex_bandeira_vermelha = load("res://assets/images/bandeira_vermelha.png")
@@ -83,8 +96,37 @@ func _ready():
 	# Conecta o sinal de desenho do TextureRect para renderizar a grade por cima dele
 	if board_texture:
 		board_texture.draw.connect(_on_board_texture_draw)
-		
+
+	_build_match_menus()
 	start_new_game()
+
+	if show_briefing and not briefing_seen:
+		briefing_seen = true
+		menus.show_briefing()
+
+func _build_match_menus():
+	menus = GameMenus.new()
+	add_child(menus)
+	menus.tutorial_requested.connect(func(): get_tree().change_scene_to_file("res://scenes/tutorial.tscn"))
+	menus.restart_requested.connect(start_new_game)
+	menus.menu_requested.connect(func(): get_tree().change_scene_to_file("res://scenes/menu.tscn"))
+
+	# Botão de menu no canto do painel de status (Esc faz o mesmo).
+	menu_button = Button.new()
+	menu_button.text = "Menu"
+	menu_button.tooltip_text = "Pausa, volume, regras e voltar ao menu (Esc)"
+	menu_button.position = Vector2(756, 14)
+	menu_button.custom_minimum_size = Vector2(60, 24)
+	menu_button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
+	menu_button.add_theme_font_size_override("font_size", 12)
+	menu_button.focus_mode = Control.FOCUS_NONE
+	menu_button.pressed.connect(open_pause_menu)
+	add_child(menu_button)
+
+func open_pause_menu():
+	if is_animating or menus.is_open():
+		return
+	menus.show_pause()
 
 # Função auxiliar para criar efeitos sonoros dinâmicos (Volume padrão mais alto que a BGM)
 func play_sfx(stream: AudioStream):
@@ -93,6 +135,7 @@ func play_sfx(stream: AudioStream):
 	var fx_player = AudioStreamPlayer.new()
 	add_child(fx_player)
 	fx_player.stream = stream
+	fx_player.bus = AudioManager.SFX_BUS
 	fx_player.volume_db = 0.0
 	fx_player.play()
 	fx_player.finished.connect(func(): fx_player.queue_free())
@@ -111,6 +154,11 @@ func start_new_game():
 	current_state = GameState.SETUP_AZUL
 	blue_pieces_to_place = [1, 1, 2, 2, 3, 3, 4, 4]
 	is_animating = false
+	turn_count = 0
+	win_reason = ""
+	AudioManager.set_mood("preparacao")
+	AudioManager.set_danger(false)
+	AudioManager.set_combat_tension(false)
 
 	clear_discard_panel()
 	
@@ -272,6 +320,15 @@ func _input(event):
 	if calculation_overlay.visible:
 		if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
 			_on_close_calculation_pressed()
+			get_viewport().set_input_as_handled()
+		return
+
+	if menus and menus.is_open():
+		return
+
+	if event is InputEventKey and event.pressed and event.keycode == KEY_ESCAPE:
+		open_pause_menu()
+		get_viewport().set_input_as_handled()
 		return
 
 	if current_state == GameState.GAME_OVER or is_animating:
@@ -308,8 +365,9 @@ func handle_setup_click(grid_pos: Vector2i):
 		update_status_msg()
 	else:
 		current_state = GameState.PLAYING
+		AudioManager.set_mood("batalha")
 		update_status_msg()
-		
+
 	# MODIFICAÇÃO N3: Força o redesenho após o clique para atualizar ou remover o tom azulado das casas
 	if board_texture:
 		board_texture.queue_redraw()
@@ -353,7 +411,8 @@ func handle_grid_click(grid_pos: Vector2i):
 			is_animating = true
 			await move_piece(piece_to_move, grid_pos)
 			is_animating = false
-			
+			turn_count += 1
+
 			check_victory_conditions()
 			if current_state != GameState.GAME_OVER:
 				switch_turn()
@@ -417,7 +476,23 @@ func move_piece(piece: GamePiece, to_pos: Vector2i):
 	await tween.finished
 	
 	await check_for_combat(piece)
+	update_music_tension()
 	print_probability_debug()
+
+# A trilha fica mais intensa quando uma vermelha chega perto da bandeira azul.
+func update_music_tension():
+	if current_state != GameState.PLAYING:
+		return
+	var danger = false
+	for x in range(GRID_SIZE):
+		for y in range(GRID_SIZE):
+			var piece = board[x][y]
+			if piece and piece.player_owner == GamePiece.Player.RED:
+				var distance = abs(x - BLUE_FLAG.x) + abs(y - BLUE_FLAG.y)
+				if distance <= 3:
+					danger = true
+	AudioManager.set_mood("perigo" if danger else "batalha")
+	AudioManager.set_danger(danger)
 
 # Remove a peça individual suavizando escala e opacidade ao mesmo tempo
 func remove_piece_with_animation(piece: GamePiece):
@@ -456,7 +531,9 @@ func check_for_combat(moved_piece: GamePiece):
 		update_probability_hud()
 			
 		play_sfx(snd_combate1)
-		await get_tree().create_timer(1.0).timeout
+		AudioManager.set_combat_tension(true)
+		await get_tree().create_timer(1.0, false).timeout
+		AudioManager.set_combat_tension(false)
 		play_sfx(snd_combate2)
 		
 		board[pos.x][pos.y] = null
@@ -473,7 +550,9 @@ func resolve_proximity_combat(attacker: GamePiece, defender: GamePiece):
 	update_probability_hud()
 	
 	play_sfx(snd_combate1)
-	await get_tree().create_timer(1.5).timeout
+	AudioManager.set_combat_tension(true)
+	await get_tree().create_timer(1.5, false).timeout
+	AudioManager.set_combat_tension(false)
 	play_sfx(snd_combate2)
 	
 	if attacker.level > defender.level:
@@ -697,7 +776,7 @@ func switch_turn():
 	update_status_msg()
 	
 	if current_turn == GamePiece.Player.RED and current_state == GameState.PLAYING:
-		await get_tree().create_timer(0.5).timeout
+		await get_tree().create_timer(0.5, false).timeout
 		jogada_simulada()
 
 func jogada_simulada():
@@ -747,11 +826,13 @@ func check_victory_conditions():
 	if board[BLUE_FLAG.x][BLUE_FLAG.y] != null and board[BLUE_FLAG.x][BLUE_FLAG.y].player_owner == GamePiece.Player.RED:
 		game_should_end = true
 		winner_player = GamePiece.Player.RED
+		win_reason = "O Vermelho alcançou a sua bandeira. Proteja a base na próxima batalha."
 		print("FIM DE JOGO: O time Vermelho capturou a bandeira Azul!")
 		
 	elif board[RED_FLAG.x][RED_FLAG.y] != null and board[RED_FLAG.x][RED_FLAG.y].player_owner == GamePiece.Player.BLUE:
 		game_should_end = true
 		winner_player = GamePiece.Player.BLUE
+		win_reason = "Sua tropa tomou a bandeira vermelha. A operação foi um sucesso!"
 		print("FIM DE JOGO: O time Azul capturou a bandeira Vermelha!")
 		
 	if not game_should_end:
@@ -767,10 +848,12 @@ func check_victory_conditions():
 		if not blue_alive:
 			game_should_end = true
 			winner_player = GamePiece.Player.RED
+			win_reason = "Todas as suas unidades foram eliminadas."
 			print("FIM DE JOGO: Todas as peças azuis foram eliminadas!")
 		elif not red_alive:
 			game_should_end = true
 			winner_player = GamePiece.Player.BLUE
+			win_reason = "O exército Vermelho foi completamente eliminado."
 			print("FIM DE JOGO: Todas as peças vermelhas foram eliminadas!")
 			
 	if game_should_end:
@@ -780,6 +863,16 @@ func check_victory_conditions():
 
 func declare_winner():
 	reset_button.visible = true
+	AudioManager.set_danger(false)
+	AudioManager.set_mood("fim")
+	# Pequena pausa para o jogador ver a jogada final antes do resultado.
+	await get_tree().create_timer(0.8, false).timeout
+	if current_state != GameState.GAME_OVER:
+		return
+	var stats = "Turnos jogados: %d\nBaixas azuis: %d de 8\nBaixas vermelhas: %d de 8" % [
+		turn_count, eliminated_blue.size(), eliminated_red.size()
+	]
+	menus.show_result(winner_player == GamePiece.Player.BLUE, win_reason, stats)
 
 # Responde ao sinal de desenho da textura de fundo para pintar overlays por cima dela
 func _on_board_texture_draw():
@@ -790,8 +883,9 @@ func _on_board_texture_draw():
 				var pos = Vector2i(x, y)
 				if pos != BLUE_FLAG and board[x][y] == null:
 					var cell_rect = Rect2(x * CELL_SIZE, y * CELL_SIZE + OFFSET_Y, CELL_SIZE, CELL_SIZE)
-					# Desenha um quadrado azul preenchido (filled = true) com 25% de opacidade
-					board_texture.draw_rect(cell_rect, Color(0.0, 0.4, 1.0, 0.25), true)
+					# Preenchimento azul + borda clara: legível também sobre o céu do cenário
+					board_texture.draw_rect(cell_rect, Color(0.0, 0.4, 1.0, 0.38), true)
+					board_texture.draw_rect(cell_rect.grow(-2), Color(0.55, 0.85, 1.0, 0.95), false, 2.0)
 
 	# 2. Desenha a moldura branca sutil em cada célula por cima da imagem
 	for x in range(GRID_SIZE):

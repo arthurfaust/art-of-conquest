@@ -3,6 +3,8 @@ extends Control
 func _ready():
 	# Garante que o menu ocupe a tela toda perfeitamente
 	set_anchors_preset(LayoutPreset.PRESET_FULL_RECT)
+	# Trilha mais distante e abafada no menu; ela abre quando a batalha começa.
+	AudioManager.set_mood("menu")
 	$VBoxContainer/JogarButton.grab_focus()
 
 func _on_jogar_button_pressed():

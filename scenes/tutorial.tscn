@@ -6,3 +6,4 @@
 [node name="Tutorial" instance=ExtResource("1_game")]
 script = ExtResource("2_tutorial")
 debug_probabilities = false
+show_briefing = false

@@ -68,6 +68,8 @@ func _ready():
 	_build_tutorial_ui()
 	status_panel.hide()
 	super._ready()
+	# O treino já tem o próprio botão Sair no painel de instruções.
+	menu_button.hide()
 
 func start_new_game():
 	exercise = "setup"

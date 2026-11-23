@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="Novo Projeto de Jogo"
+config/name="Art of Conquest"
 run/main_scene="uid://cd3c4sr8qfy57"
 config/features=PackedStringArray("4.7", "Mobile")
-config/icon="res://icon.svg"
+config/icon="res://assets/images/tanque_leopard.png"
 
 [audio]
 

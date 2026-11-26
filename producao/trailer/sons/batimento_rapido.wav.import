@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://bgowd0e1e5qas"
-path="res://.godot/imported/batimento_rapido.wav-106c24413a65af9ed434b489f093ee67.sample"
+path="res://.godot/imported/batimento_rapido.wav-ba235bc1a8dbbf94654514110fa137d4.sample"
 
 [deps]
 
-source_file="res://trailer/sons/batimento_rapido.wav"
-dest_files=["res://.godot/imported/batimento_rapido.wav-106c24413a65af9ed434b489f093ee67.sample"]
+source_file="res://producao/trailer/sons/batimento_rapido.wav"
+dest_files=["res://.godot/imported/batimento_rapido.wav-ba235bc1a8dbbf94654514110fa137d4.sample"]
 
 [params]
 

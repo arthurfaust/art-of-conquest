@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://box8prv08cbj"
-path="res://.godot/imported/vento.wav-a88a2b6df0499fb1b2ff6579b48a98e8.sample"
+path="res://.godot/imported/vento.wav-59197c3b1e5d75369a4a46ac77318078.sample"
 
 [deps]
 
-source_file="res://trailer/sons/vento.wav"
-dest_files=["res://.godot/imported/vento.wav-a88a2b6df0499fb1b2ff6579b48a98e8.sample"]
+source_file="res://producao/trailer/sons/vento.wav"
+dest_files=["res://.godot/imported/vento.wav-59197c3b1e5d75369a4a46ac77318078.sample"]
 
 [params]
 

@@ -3,12 +3,12 @@ extends Node2D
 # Trailer narrativo (cerca de 1 minuto) montado com os assets do jogo.
 # Cada evento acontece em um segundo fixo da linha do tempo; gravado com o
 # Movie Maker da Godot e FPS fixo, o vídeo sai idêntico a cada renderização.
-# Como gravar: veja trailer/README.md.
+# Como gravar: veja producao/trailer/README.md.
 
 const W = 1920.0
 const H = 1080.0
 const IMG = "res://assets/images/"
-const SND = "res://trailer/sons/"
+const SND = "res://producao/trailer/sons/"
 const GAME_SND = "res://assets/sounds/"
 const BLUE = Color("3d8bff")
 const RED = Color("ff4a3d")
@@ -40,7 +40,6 @@ func _ready():
 func _timeline():
 	# 1. O campo (0–10 s)
 	_show_scene("campo", 0.0, 10.0)
-	_at(0.0, func(): _sfx("vento.wav", -10.0))
 	_at(2.0, func(): _caption("A trégua durou até o anoitecer.", 5.0))
 	_at(3.2, func(): _boom(0.6))
 	_at(7.6, func(): _boom(1.0))
@@ -51,26 +50,25 @@ func _timeline():
 
 	# 3. As lonas (20–30 s)
 	_show_scene("lonas", 20.0, 30.0)
-	_at(20.0, func(): _sfx("vento.wav", -14.0))
 	_at(23.4, func(): _sfx("rajada_lona.wav", -4.0))
 	_at(24.6, func(): _caption("Do outro lado, ninguém sabe quem espera sob as lonas.", 4.6))
 	_at(26.5, func(): _sfx("batimento_lento.wav", -6.0))
 
 	# 4. A decisão (30–40 s)
 	_show_scene("decisao", 30.0, 40.0)
-	_at(30.0, func(): _music_to(-17.0, 2600.0, 2.0))
+	_at(30.0, func(): _music_to(-4.0, 20000.0, 2.0))
 	_at(33.8, func(): _caption("Alguém precisa descobrir.", 4.4))
 
 	# 5. A travessia (40–52 s)
 	_show_scene("travessia", 40.0, 52.0)
-	_at(40.0, func(): _music_to(-22.0, 1500.0, 1.5))
+	_at(40.0, func(): _music_to(-8.0, 20000.0, 1.5))
 	_at(41.8, func(): _sfx("batimento_rapido.wav", -3.0))
 	_at(48.6, func(): _caption("Ele não voltou. Mas agora todos sabem quem estava ali.", 3.4))
 
 	# 6. Título (52–62 s)
 	_show_scene("titulo", 52.0, 62.5)
 	_at(52.0, func():
-		_music_to(-7.0, 20000.0, 1.0)
+		_music_to(-2.0, 20000.0, 1.0)
 		_boom(1.4))
 	_at(55.2, func(): _caption("Cada peça revelada muda as chances.", 3.8))
 	_at(59.6, func(): _caption("Art of Conquest · disponível para Windows", 2.4, 40))
@@ -102,8 +100,12 @@ func _setup_audio():
 		AudioServer.set_bus_volume_db(index, 0.0)
 	music = AudioManager.bgm_player
 	music.stop()
-	music.volume_db = -22.0
-	AudioManager.lowpass.cutoff_hz = 900.0
+	# Cancela a transição de clima do jogo ("menu"), que abaixaria e abafaria a trilha.
+	if AudioManager.mood_tween:
+		AudioManager.mood_tween.kill()
+	# Trilha em destaque desde o início, sem filtro (versão sem o vento de fundo).
+	music.volume_db = -5.0
+	AudioManager.lowpass.cutoff_hz = 20000.0
 	music.play(0.0)
 
 func _music_to(volume_db: float, cutoff: float, seconds: float):
@@ -500,7 +502,7 @@ func _build_crossing() -> Node2D:
 			tween.tween_property(agent, "position", destination, 0.45).set_trans(Tween.TRANS_QUAD).set_ease(Tween.EASE_OUT)
 		var flare = create_tween()
 		flare.tween_interval(2.9)
-		flare.tween_callback(func(): _sfx("sinalizador.wav", -4.0))
+		flare.tween_callback(func(): _sfx("sinalizador.wav", -10.0))
 		flare.tween_interval(1.1)
 		flare.tween_callback(func():
 			flash.color = Color(1.0, 0.95, 0.85, 0.75))
@@ -512,7 +514,7 @@ func _build_crossing() -> Node2D:
 		combat.tween_callback(func(): _flip(target, "4.Atirador de Elite.png", 0.3))
 		combat.tween_interval(1.5)
 		combat.tween_callback(func():
-			_sfx("som_combate2.mp3", 2.0)
+			_sfx("som_combate2.mp3", -5.0)
 			var silence = create_tween()
 			for player in get_children():
 				if player is AudioStreamPlayer and player.stream.resource_path.ends_with("batimento_rapido.wav"):

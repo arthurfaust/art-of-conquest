@@ -216,7 +216,8 @@ art-of-conquest/
 ├── assets/
 │   ├── images/               # Sprites das unidades, tabuleiro, bandeiras e ícone
 │   └── sounds/               # Música tema e efeitos sonoros
-├── docs/                     # GDD atualizado (.pdf e .docx) e documentos de gestão
+├── docs/                     # GDD (.pdf e .docx), documentos de gestão e roteiros do vídeo e do trailer
+├── producao/                 # Ferramentas de mídia (fora do jogo): trailer e vídeo de apresentação
 ├── icon.svg                  # Ícone padrão da Godot (a janela usa o tanque de assets/images)
 ├── default_bus_layout.tres   # Configuração dos canais de áudio
 └── export_presets.cfg        # Configuração de exportação para Windows

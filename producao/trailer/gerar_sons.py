@@ -1,7 +1,7 @@
 """Sintetiza os sons ambientes do trailer (sem arquivos de terceiros).
 
-Uso: python trailer/gerar_sons.py
-Gera WAVs em trailer/sons/: vento, explosão distante, sinalizador e batimentos.
+Uso: python producao/trailer/gerar_sons.py
+Gera WAVs em producao/trailer/sons/: vento, explosão distante, sinalizador e batimentos.
 """
 import os
 import wave

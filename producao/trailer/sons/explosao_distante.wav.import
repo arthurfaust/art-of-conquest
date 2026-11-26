@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cqolkasvam4ty"
-path="res://.godot/imported/explosao_distante.wav-f3cd5274579098f9808ee708d8c36181.sample"
+path="res://.godot/imported/explosao_distante.wav-4a691f840dd64012c70bb97fd10e8060.sample"
 
 [deps]
 
-source_file="res://trailer/sons/explosao_distante.wav"
-dest_files=["res://.godot/imported/explosao_distante.wav-f3cd5274579098f9808ee708d8c36181.sample"]
+source_file="res://producao/trailer/sons/explosao_distante.wav"
+dest_files=["res://.godot/imported/explosao_distante.wav-4a691f840dd64012c70bb97fd10e8060.sample"]
 
 [params]
 

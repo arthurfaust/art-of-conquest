@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://c3dwtm82at3sn"
-path="res://.godot/imported/sinalizador.wav-d2be512e4bc3a667e815d1eb5cf1fcce.sample"
+path="res://.godot/imported/sinalizador.wav-ed7922154a775dfbb53ae11c35c312fb.sample"
 
 [deps]
 
-source_file="res://trailer/sons/sinalizador.wav"
-dest_files=["res://.godot/imported/sinalizador.wav-d2be512e4bc3a667e815d1eb5cf1fcce.sample"]
+source_file="res://producao/trailer/sons/sinalizador.wav"
+dest_files=["res://.godot/imported/sinalizador.wav-ed7922154a775dfbb53ae11c35c312fb.sample"]
 
 [params]
 

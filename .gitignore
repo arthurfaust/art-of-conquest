@@ -8,5 +8,19 @@ desktop.ini
 Thumbs.db
 .DS_Store
 
-# Executáveis gerados pela exportação
+# Executáveis, gravações, vídeos gerados e arquivo local (tudo pode ser gerado de novo)
 build/
+
+# Ajuste temporário de resolução usado só para gravar o trailer e o vídeo em 1080p
+override.cfg
+
+# Narração gravada para o vídeo de apresentação (arquivos pesados, ficam só no computador)
+producao/video-apresentacao/narracao/
+
+# Ambientes e cache do Python usados pelos scripts de produção
+__pycache__/
+*.pyc
+
+# Roteiros do vídeo e do trailer (material de produção, ficam só no computador)
+docs/roteiro-video-apresentacao.md
+docs/trailer-roteiro-e-prompts.md
